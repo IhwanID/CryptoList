@@ -9,13 +9,14 @@
 /* Begin PBXBuildFile section */
 		6046E19627B69D28001D3F0F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6046E19527B69D28001D3F0F /* AppDelegate.swift */; };
 		6046E19827B69D28001D3F0F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6046E19727B69D28001D3F0F /* SceneDelegate.swift */; };
-		6046E19A27B69D28001D3F0F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6046E19927B69D28001D3F0F /* ViewController.swift */; };
 		6046E19D27B69D28001D3F0F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6046E19B27B69D28001D3F0F /* Main.storyboard */; };
 		6046E19F27B69D29001D3F0F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6046E19E27B69D29001D3F0F /* Assets.xcassets */; };
 		6046E1A227B69D29001D3F0F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6046E1A027B69D29001D3F0F /* LaunchScreen.storyboard */; };
 		6046E1AD27B69D29001D3F0F /* CryptoListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6046E1AC27B69D29001D3F0F /* CryptoListTests.swift */; };
 		6046E1B727B69D29001D3F0F /* CryptoListUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6046E1B627B69D29001D3F0F /* CryptoListUITests.swift */; };
 		6046E1B927B69D29001D3F0F /* CryptoListUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6046E1B827B69D29001D3F0F /* CryptoListUITestsLaunchTests.swift */; };
+		6046E1C627B6AABA001D3F0F /* CryptoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6046E1C527B6AABA001D3F0F /* CryptoListViewController.swift */; };
+		6046E1C827B6AAD7001D3F0F /* NewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6046E1C727B6AAD7001D3F0F /* NewsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,7 +40,6 @@
 		6046E19227B69D28001D3F0F /* CryptoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CryptoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6046E19527B69D28001D3F0F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6046E19727B69D28001D3F0F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		6046E19927B69D28001D3F0F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		6046E19C27B69D28001D3F0F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6046E19E27B69D29001D3F0F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6046E1A127B69D29001D3F0F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -49,6 +49,8 @@
 		6046E1B227B69D29001D3F0F /* CryptoListUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CryptoListUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6046E1B627B69D29001D3F0F /* CryptoListUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoListUITests.swift; sourceTree = "<group>"; };
 		6046E1B827B69D29001D3F0F /* CryptoListUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoListUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		6046E1C527B6AABA001D3F0F /* CryptoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoListViewController.swift; sourceTree = "<group>"; };
+		6046E1C727B6AAD7001D3F0F /* NewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,9 +101,10 @@
 		6046E19427B69D28001D3F0F /* CryptoList */ = {
 			isa = PBXGroup;
 			children = (
+				6046E1CA27B6AAE9001D3F0F /* Crypto */,
+				6046E1C927B6AADC001D3F0F /* News */,
 				6046E19527B69D28001D3F0F /* AppDelegate.swift */,
 				6046E19727B69D28001D3F0F /* SceneDelegate.swift */,
-				6046E19927B69D28001D3F0F /* ViewController.swift */,
 				6046E19B27B69D28001D3F0F /* Main.storyboard */,
 				6046E19E27B69D29001D3F0F /* Assets.xcassets */,
 				6046E1A027B69D29001D3F0F /* LaunchScreen.storyboard */,
@@ -125,6 +128,22 @@
 				6046E1B827B69D29001D3F0F /* CryptoListUITestsLaunchTests.swift */,
 			);
 			path = CryptoListUITests;
+			sourceTree = "<group>";
+		};
+		6046E1C927B6AADC001D3F0F /* News */ = {
+			isa = PBXGroup;
+			children = (
+				6046E1C727B6AAD7001D3F0F /* NewsViewController.swift */,
+			);
+			path = News;
+			sourceTree = "<group>";
+		};
+		6046E1CA27B6AAE9001D3F0F /* Crypto */ = {
+			isa = PBXGroup;
+			children = (
+				6046E1C527B6AABA001D3F0F /* CryptoListViewController.swift */,
+			);
+			path = Crypto;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -258,9 +277,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6046E19A27B69D28001D3F0F /* ViewController.swift in Sources */,
 				6046E19627B69D28001D3F0F /* AppDelegate.swift in Sources */,
+				6046E1C627B6AABA001D3F0F /* CryptoListViewController.swift in Sources */,
 				6046E19827B69D28001D3F0F /* SceneDelegate.swift in Sources */,
+				6046E1C827B6AAD7001D3F0F /* NewsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
