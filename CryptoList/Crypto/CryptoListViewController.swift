@@ -39,10 +39,17 @@ class CryptoListViewController: UITableViewController {
             case let .success(coins):
                 self?.coins = coins
             case let .failure(error):
-                print(error)
+                DispatchQueue.main.async {
+                    self?.handle(error) {
+                        self?.fetchData()
+                    }
+                }
+            }
+            DispatchQueue.main.async {
+                self?.refreshControl?.endRefreshing()
             }
         }
-        refreshControl?.endRefreshing()
+        
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -74,4 +81,29 @@ class CryptoListViewController: UITableViewController {
         showDetailViewController(nav, sender: nil)
     }
     
+}
+
+extension UIViewController {
+    func handle(_ error: Error, completion: @escaping () -> ()) {
+            let alert = UIAlertController(
+                title: "An error occured",
+                message: error.localizedDescription,
+                preferredStyle: .alert
+            )
+            
+            alert.addAction(UIAlertAction(
+                title: "Dismiss",
+                style: .default
+            ))
+
+            alert.addAction(UIAlertAction(
+                title: "Retry",
+                style: .default,
+                handler: { _ in
+                    completion()
+                }
+            ))
+
+            present(alert, animated: true)
+        }
 }
