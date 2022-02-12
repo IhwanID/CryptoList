@@ -35,7 +35,7 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" text="$ 9,513.98" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fu0-32-v7N">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fu0-32-v7N">
                                                             <rect key="frame" x="310" y="0.0" width="72" height="24.5"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                             <nil key="textColor"/>
@@ -52,8 +52,8 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+0.41(+5.50%)" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5IF-Wm-BXg">
-                                                            <rect key="frame" x="285.5" y="0.0" width="96.5" height="24.5"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5IF-Wm-BXg">
+                                                            <rect key="frame" x="382" y="0.0" width="0.0" height="24.5"/>
                                                             <color key="backgroundColor" systemColor="systemRedColor"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" relation="lessThanOrEqual" constant="30" id="xGS-zj-VvC"/>
@@ -83,6 +83,8 @@
                                 <connections>
                                     <outlet property="coinNameLabel" destination="ZjD-ZD-mJC" id="WWN-U5-Ukl"/>
                                     <outlet property="coinSymbolLabel" destination="jZh-yz-yJN" id="0hr-6u-YIO"/>
+                                    <outlet property="priceLabel" destination="fu0-32-v7N" id="yvt-YK-75Z"/>
+                                    <outlet property="tickerLabel" destination="5IF-Wm-BXg" id="5hR-J3-cq6"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

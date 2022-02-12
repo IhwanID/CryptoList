@@ -21,8 +21,8 @@ protocol CryptoService {
 
 class CryptoServiceAPI: CryptoService {
     func loadCrypto(limit: UInt, completion: @escaping (Result<[Coin], NetworkError>) -> Void) {
-        
-        let request = URLRequest(url: URL(string: "https://min-api.cryptocompare.com/data/top/totaltoptiervolfull?limit=\(limit)&tsym=USD")!)
+        let key = "7b9eee5bd406bb262532c51c3665375786b10d5b45c17bf0772d687b15842111"
+        let request = URLRequest(url: URL(string: "https://min-api.cryptocompare.com/data/top/totaltoptiervolfull?limit=\(limit)&tsym=USD&api_key=\(key)")!)
         
         URLSession.shared.dataTask(with: request) {(data, response, error) in
             if let error = error {

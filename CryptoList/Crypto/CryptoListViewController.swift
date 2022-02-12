@@ -76,6 +76,8 @@ class CryptoListViewController: UITableViewController {
         let coin = coins[indexPath.row]
         cell.coinNameLabel.text = coin.name
         cell.coinSymbolLabel.text = coin.symbol
+        cell.priceLabel.text = "$ \(coin.price)"
+        
         return cell
     }
     
@@ -116,12 +118,11 @@ extension CryptoListViewController: URLSessionWebSocketDelegate {
     func receive() {
         webSocket?.receive(completionHandler: { [weak self] result in
             switch result {
-                case .failure(let error):
-                    print("Failed to receive message: \(error)")
+                case .failure:
+                    break
                 case .success(let message):
                     switch message {
                     case .string(let text):
-                        print("Received text message: \(text)")
                         let data = Data(text.utf8)
                         let json = try! JSONSerialization.jsonObject(with: data, options: []) as? [String : Any]
                         
@@ -130,13 +131,26 @@ extension CryptoListViewController: URLSessionWebSocketDelegate {
                                 let price: Double = json?["PRICE"] as? Double ?? 0
                                 let symbol: String = json?["FROMSYMBOL"] as! String
                                 
-                                print("\(symbol) ==> \(price)")
+                                if let row: Int = self?.coins.firstIndex(where: {$0.symbol == symbol}) {
+                                    DispatchQueue.main.async {
+                                        let indexPath: IndexPath = NSIndexPath(row: row, section: 0) as IndexPath
+                                        let cell = self?.tableView.cellForRow(at: indexPath) as! CryptoCell?
+                                        let currentPrice = self?.coins[row].open24Hour ?? 0
+                                       
+                                        let diffPrice: Double = price - currentPrice
+                                        let percentage = (diffPrice/price) * 100
+                                        cell?.priceLabel.text = "$ \(price)"
+                                        cell?.tickerLabel.backgroundColor = diffPrice.sign == .minus ? .red : .green
+                                        cell?.tickerLabel.text = "\(diffPrice)(\(percentage)%)"
+                                    }
+                                    
+                                }
                             }
                         }
-                    case .data(let data):
-                        print("Received binary message: \(data)")
+                    case .data:
+                        break
                     @unknown default:
-                        fatalError()
+                        break
                     }
                 }
             
@@ -148,12 +162,8 @@ extension CryptoListViewController: URLSessionWebSocketDelegate {
     func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didOpenWithProtocol protocol: String?) {
         send()
         receive()
-        
     }
     
-    func urlSession(_ session: URLSession, task: URLSessionTask, didFinishCollecting metrics: URLSessionTaskMetrics) {
-        //close connection
-    }
 }
 
 extension UIViewController {

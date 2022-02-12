@@ -10,6 +10,8 @@ import Foundation
 struct Coin {
     let name: String
     let symbol: String
+    let price: Double
+    let open24Hour: Double
     
     var subs: String {
         "2~Coinbase~\(symbol)~USD"
