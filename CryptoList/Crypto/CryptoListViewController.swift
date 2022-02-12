@@ -20,18 +20,29 @@ class CryptoListViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        refreshControl = UIRefreshControl()
+        refreshControl?.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
+    }
+    
+    @objc private func refresh(_ sender: Any) {
+        fetchData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        service.loadCrypto(limit: 50) { result in
+        fetchData()
+    }
+    
+    func fetchData(){
+        refreshControl?.beginRefreshing()
+        service.loadCrypto(limit: 50) { [weak self] result in
             switch result {
             case let .success(coins):
-                self.coins = coins
+                self?.coins = coins
             case let .failure(error):
                 print(error)
             }
         }
+        refreshControl?.endRefreshing()
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -60,7 +71,7 @@ class CryptoListViewController: UITableViewController {
         vc.title = "News"
         vc.categories = coins[indexPath.row].symbol
         let nav = UINavigationController(rootViewController: vc)
-       showDetailViewController(nav, sender: nil)
+        showDetailViewController(nav, sender: nil)
     }
     
 }
