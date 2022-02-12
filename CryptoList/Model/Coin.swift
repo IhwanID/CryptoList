@@ -10,4 +10,8 @@ import Foundation
 struct Coin {
     let name: String
     let symbol: String
+    
+    var subs: String {
+        "2~Coinbase~\(symbol)~USD"
+    }
 }

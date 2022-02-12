@@ -9,6 +9,7 @@ import UIKit
 
 class CryptoListViewController: UITableViewController {
     let service: CryptoService = CryptoServiceAPI()
+    private var webSocket: URLSessionWebSocketTask?
     
     private var coins: [Coin] = [] {
         didSet{
@@ -22,6 +23,14 @@ class CryptoListViewController: UITableViewController {
         super.viewDidLoad()
         refreshControl = UIRefreshControl()
         refreshControl?.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
+        
+        let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
+        let key = "7b9eee5bd406bb262532c51c3665375786b10d5b45c17bf0772d687b15842111"
+        let url = URL(string: "wss://streamer.cryptocompare.com/v2?api_key=\(key)")!
+        webSocket = session.webSocketTask(with: url)
+        webSocket?.resume()
+        
+        
     }
     
     @objc private func refresh(_ sender: Any) {
@@ -83,27 +92,92 @@ class CryptoListViewController: UITableViewController {
     
 }
 
+extension CryptoListViewController: URLSessionWebSocketDelegate {
+    func send() {
+        DispatchQueue.global().asyncAfter(deadline: .now()+1) {
+            let subRequest = [
+                "action": "SubAdd",
+                "subs": self.coins.map{$0.subs}
+            ] as [String : Any]
+            
+            if let requestString = subRequest.toJSONString() {
+                self.webSocket?.send(.string(requestString), completionHandler: { error in
+                    if error != nil {
+                        print("===> Error Send")
+                    }
+                })
+            }
+            
+            
+            
+        }
+    }
+    
+    func receive() {
+        webSocket?.receive(completionHandler: { [weak self] result in
+            switch result {
+                case .failure(let error):
+                    print("Failed to receive message: \(error)")
+                case .success(let message):
+                    switch message {
+                    case .string(let text):
+                        print("Received text message: \(text)")
+                        let data = Data(text.utf8)
+                        let json = try! JSONSerialization.jsonObject(with: data, options: []) as? [String : Any]
+                        
+                        if let type = (json?["TYPE"] as? NSString)?.intValue {
+                            if type == 2 {
+                                let price: Double = json?["PRICE"] as? Double ?? 0
+                                let symbol: String = json?["FROMSYMBOL"] as! String
+                                
+                                print("\(symbol) ==> \(price)")
+                            }
+                        }
+                    case .data(let data):
+                        print("Received binary message: \(data)")
+                    @unknown default:
+                        fatalError()
+                    }
+                }
+            
+            
+            self?.receive()
+        })
+    }
+    
+    func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didOpenWithProtocol protocol: String?) {
+        send()
+        receive()
+        
+    }
+    
+    func urlSession(_ session: URLSession, task: URLSessionTask, didFinishCollecting metrics: URLSessionTaskMetrics) {
+        //close connection
+    }
+}
+
 extension UIViewController {
     func handle(_ error: Error, completion: @escaping () -> ()) {
-            let alert = UIAlertController(
-                title: "An error occured",
-                message: error.localizedDescription,
-                preferredStyle: .alert
-            )
-            
-            alert.addAction(UIAlertAction(
-                title: "Dismiss",
-                style: .default
-            ))
-
-            alert.addAction(UIAlertAction(
-                title: "Retry",
-                style: .default,
-                handler: { _ in
-                    completion()
-                }
-            ))
-
-            present(alert, animated: true)
-        }
+        let alert = UIAlertController(
+            title: "An error occured",
+            message: error.localizedDescription,
+            preferredStyle: .alert
+        )
+        
+        alert.addAction(UIAlertAction(
+            title: "Dismiss",
+            style: .default
+        ))
+        
+        alert.addAction(UIAlertAction(
+            title: "Retry",
+            style: .default,
+            handler: { _ in
+                completion()
+            }
+        ))
+        
+        present(alert, animated: true)
+    }
 }
+
