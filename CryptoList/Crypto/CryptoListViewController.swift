@@ -8,12 +8,31 @@
 import UIKit
 
 class CryptoListViewController: UITableViewController {
+    let service: CryptoService = CryptoServiceAPI()
+    
+    private var coins: [Coin] = [] {
+        didSet{
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        service.loadCrypto(limit: 50) { result in
+            switch result {
+            case let .success(coins):
+                self.coins = coins
+            case let .failure(error):
+                print(error)
+            }
+        }
+    }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         
@@ -22,11 +41,14 @@ class CryptoListViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return 50
+        return coins.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cryptoCell")!
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cryptoCell") as! CryptoCell
+        let coin = coins[indexPath.row]
+        cell.coinNameLabel.text = coin.name
+        cell.coinSymbolLabel.text = coin.symbol
         return cell
     }
     
@@ -34,8 +56,9 @@ class CryptoListViewController: UITableViewController {
         
         tableView.deselectRow(at: indexPath, animated: true)
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "newsVC")
+        let vc = storyboard.instantiateViewController(withIdentifier: "newsVC") as! NewsViewController
         vc.title = "News"
+        vc.categories = coins[indexPath.row].symbol
         let nav = UINavigationController(rootViewController: vc)
        showDetailViewController(nav, sender: nil)
     }

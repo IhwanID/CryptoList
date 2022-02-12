@@ -16,7 +16,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="0.0" reuseIdentifier="cryptoCell" rowHeight="65" id="ecP-fr-rly">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="0.0" reuseIdentifier="cryptoCell" rowHeight="65" id="ecP-fr-rly" customClass="CryptoCell" customModule="CryptoList" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="44.5" width="414" height="65"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ecP-fr-rly" id="Bl5-Dg-7hd">
@@ -80,6 +80,10 @@
                                         <constraint firstAttribute="trailing" secondItem="OlS-yW-5Ax" secondAttribute="trailing" constant="16" id="vGJ-pu-IC6"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="coinNameLabel" destination="ZjD-ZD-mJC" id="WWN-U5-Ukl"/>
+                                    <outlet property="coinSymbolLabel" destination="jZh-yz-yJN" id="0hr-6u-YIO"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <sections/>
@@ -103,7 +107,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="newsCell" rowHeight="280" id="1aW-18-3rq">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="newsCell" rowHeight="280" id="1aW-18-3rq" customClass="NewsCell" customModule="CryptoList" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="44.5" width="414" height="280"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1aW-18-3rq" id="dXU-zN-ijM">
@@ -127,7 +131,7 @@
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YqE-Vu-f3a">
                                                     <rect key="frame" x="0.0" y="76" width="381.5" height="188"/>
-                                                    <mutableString key="text">In this industry, the name ‘Uniswap’ has become quite popular and for good reason. This is a cryptocurrency exchange that utilizes a decentralized network protocol, which also facilitates automated transactions between various crypto tokens on Ethereum’s blockchain via the usage of smart contracts. With that in mind, Universe Finance is a name that is also [&amp;#8230;]The post Universe Finance Wants To Be The Number One Uniswap V3 Liquidity Management Platform, IDO To Launch Soon appeared first on Blockchain, Crypto and Stock News.</mutableString>
+                                                    <string key="text">In this industry, the name ‘Uniswap’ has become quite popular and for good reason. This is a cryptocurrency exchange that utilizes a decentralized network protocol, which also facilitates automated transactions between various crypto tokens on Ethereum’s blockchain via the usage of smart contracts. With that in mind, Universe Finance is a name that is also [&amp;#8230;]The post Universe Finance Wants To Be The Number One Uniswap V3 Liquidity Management Platform, IDO To Launch Soon appeared first on Blockchain, Crypto and Stock News.</string>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -142,6 +146,11 @@
                                         <constraint firstItem="oWe-HX-Zor" firstAttribute="leading" secondItem="dXU-zN-ijM" secondAttribute="leading" constant="16" id="vVT-Rr-pGC"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="bodyLabel" destination="YqE-Vu-f3a" id="C8M-yJ-FKX"/>
+                                    <outlet property="sourceLabel" destination="QFC-J3-XGi" id="WvB-Fa-3Xm"/>
+                                    <outlet property="titleLabel" destination="TwY-3q-S7w" id="Vrf-Cy-sJA"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <sections/>
