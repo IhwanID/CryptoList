@@ -17,3 +17,5 @@ struct Coin {
         "2~Binance~\(symbol)~USDT"
     }
 }
+
+extension Coin: Equatable {}

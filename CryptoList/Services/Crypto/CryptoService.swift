@@ -13,6 +13,12 @@ protocol CryptoService {
     func loadCrypto(limit: UInt, completion: @escaping (Result) -> Void)
 }
 
+extension CryptoService {
+    func loadCrypto(limit: UInt = 10, completion: @escaping (Result) -> Void) {
+        loadCrypto(limit: limit, completion: completion)
+    }
+}
+
 class CryptoServiceAPI: CryptoService {
     
     private let url: URL
@@ -28,7 +34,7 @@ class CryptoServiceAPI: CryptoService {
         self.client = client
     }
     
-    func loadCrypto(limit: UInt, completion: @escaping (CryptoService.Result) -> Void) {
+    func loadCrypto(limit: UInt = 50, completion: @escaping (CryptoService.Result) -> Void) {
         client.get(from: url) { [weak self] result in
             guard self != nil else { return }
             
