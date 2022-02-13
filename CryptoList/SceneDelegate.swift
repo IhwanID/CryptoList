@@ -36,7 +36,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let bundle = Bundle(for: CryptoListViewController.self)
         let storyboard = UIStoryboard(name: "Main", bundle: bundle)
         let vc = storyboard.instantiateInitialViewController() as! CryptoListViewController
-        vc.title = title
         vc.service = CryptoServiceAPI(url: CryptoEndpoint.get(limit: 50).url(baseURL: baseURL), client: httpClient)
         vc.webSocketConnection = WebSocketTaskConnection(url: socketURL)
         vc.select = { [self] symbol in
@@ -51,7 +50,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let bundle = Bundle(for: NewsViewController.self)
         let storyboard = UIStoryboard(name: "Main", bundle: bundle)
         let vc = storyboard.instantiateViewController(withIdentifier: "newsVC") as! NewsViewController
-        vc.title = "News"
         vc.service = NewsServiceAPI(url: NewsEndpoint.get(category: category).url(baseURL: baseURL), client: httpClient)
         return vc
     }

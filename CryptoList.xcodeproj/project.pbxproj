@@ -21,6 +21,7 @@
 		609BBE3A27B742AD0085290B /* News.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609BBE3927B742AD0085290B /* News.swift */; };
 		609BBE3C27B742EE0085290B /* NewsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609BBE3B27B742EE0085290B /* NewsService.swift */; };
 		609BBE4027B745A30085290B /* NewsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609BBE3F27B745A30085290B /* NewsCell.swift */; };
+		60A787CC27B92739007F8C33 /* CryptoListViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60A787CB27B92739007F8C33 /* CryptoListViewControllerTests.swift */; };
 		60B8547627B884F3008D0CE4 /* DoubleExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B8547527B884F3008D0CE4 /* DoubleExtension.swift */; };
 		60B8547A27B8AF28008D0CE4 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B8547927B8AF28008D0CE4 /* HTTPClient.swift */; };
 		60B8547C27B8B51F008D0CE4 /* CryptoMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60B8547B27B8B51F008D0CE4 /* CryptoMapper.swift */; };
@@ -63,6 +64,7 @@
 		609BBE3927B742AD0085290B /* News.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = News.swift; sourceTree = "<group>"; };
 		609BBE3B27B742EE0085290B /* NewsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsService.swift; sourceTree = "<group>"; };
 		609BBE3F27B745A30085290B /* NewsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsCell.swift; sourceTree = "<group>"; };
+		60A787CB27B92739007F8C33 /* CryptoListViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoListViewControllerTests.swift; sourceTree = "<group>"; };
 		60B8547527B884F3008D0CE4 /* DoubleExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleExtension.swift; sourceTree = "<group>"; };
 		60B8547927B8AF28008D0CE4 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		60B8547B27B8B51F008D0CE4 /* CryptoMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoMapper.swift; sourceTree = "<group>"; };
@@ -147,6 +149,7 @@
 				60B8548527B8D463008D0CE4 /* Helper */,
 				60B8548127B8D1A5008D0CE4 /* LoadCryptoListFromRemoteUseCaseTests.swift */,
 				60D9A0A827B8EC5A00C8B614 /* LoadNewsFromRemoteUseCaseTest.swift */,
+				60A787CB27B92739007F8C33 /* CryptoListViewControllerTests.swift */,
 			);
 			path = CryptoListTests;
 			sourceTree = "<group>";
@@ -345,6 +348,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				60A787CC27B92739007F8C33 /* CryptoListViewControllerTests.swift in Sources */,
 				60D9A0A927B8EC5A00C8B614 /* LoadNewsFromRemoteUseCaseTest.swift in Sources */,
 				60B8548227B8D1A5008D0CE4 /* LoadCryptoListFromRemoteUseCaseTests.swift in Sources */,
 				60B8548927B8D4F3008D0CE4 /* XCTestCaseExtension.swift in Sources */,
