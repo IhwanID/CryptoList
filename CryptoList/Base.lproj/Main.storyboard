@@ -52,12 +52,9 @@
                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0(0%)" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5IF-Wm-BXg">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="0(0%)" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5IF-Wm-BXg">
                                                             <rect key="frame" x="341" y="0.0" width="41" height="29.5"/>
                                                             <color key="backgroundColor" systemColor="systemGrayColor"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" relation="lessThanOrEqual" constant="30" id="xGS-zj-VvC"/>
-                                                            </constraints>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
@@ -109,32 +106,32 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="newsCell" rowHeight="280" id="1aW-18-3rq" customClass="NewsCell" customModule="CryptoList" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="44.5" width="414" height="280"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="newsCell" rowHeight="206" id="1aW-18-3rq" customClass="NewsCell" customModule="CryptoList" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="44.5" width="414" height="206"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1aW-18-3rq" id="dXU-zN-ijM">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="280"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="206"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="oWe-HX-Zor">
-                                            <rect key="frame" x="16" y="8" width="382" height="264"/>
+                                            <rect key="frame" x="16" y="16" width="382" height="174"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="thecoinrise" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QFC-J3-XGi">
-                                                    <rect key="frame" x="0.0" y="0.0" width="63" height="14.5"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                    <nil key="textColor"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="58.5" height="13.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Universe Finance Wants To Be The Number One Uniswap V3 Liquidity Management Platform, IDO To Launch Soon" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TwY-3q-S7w">
-                                                    <rect key="frame" x="0.0" y="27.5" width="382" height="36"/>
+                                                    <rect key="frame" x="0.0" y="23.5" width="382" height="36"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YqE-Vu-f3a">
-                                                    <rect key="frame" x="0.0" y="76" width="381.5" height="188"/>
+                                                    <rect key="frame" x="0.0" y="69.5" width="377" height="104.5"/>
                                                     <string key="text">In this industry, the name ‘Uniswap’ has become quite popular and for good reason. This is a cryptocurrency exchange that utilizes a decentralized network protocol, which also facilitates automated transactions between various crypto tokens on Ethereum’s blockchain via the usage of smart contracts. With that in mind, Universe Finance is a name that is also [&amp;#8230;]The post Universe Finance Wants To Be The Number One Uniswap V3 Liquidity Management Platform, IDO To Launch Soon appeared first on Blockchain, Crypto and Stock News.</string>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -142,9 +139,9 @@
                                         </stackView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="bottom" secondItem="oWe-HX-Zor" secondAttribute="bottom" constant="8" id="03u-cL-biT"/>
+                                        <constraint firstAttribute="bottom" secondItem="oWe-HX-Zor" secondAttribute="bottom" constant="16" id="03u-cL-biT"/>
                                         <constraint firstAttribute="trailing" secondItem="oWe-HX-Zor" secondAttribute="trailing" constant="16" id="MuY-Vl-ZZ3"/>
-                                        <constraint firstItem="oWe-HX-Zor" firstAttribute="top" secondItem="dXU-zN-ijM" secondAttribute="top" constant="8" id="rfF-0c-oej"/>
+                                        <constraint firstItem="oWe-HX-Zor" firstAttribute="top" secondItem="dXU-zN-ijM" secondAttribute="top" constant="16" id="rfF-0c-oej"/>
                                         <constraint firstItem="oWe-HX-Zor" firstAttribute="leading" secondItem="dXU-zN-ijM" secondAttribute="leading" constant="16" id="vVT-Rr-pGC"/>
                                     </constraints>
                                 </tableViewCellContentView>
