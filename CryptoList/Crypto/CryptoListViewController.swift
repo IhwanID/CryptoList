@@ -90,6 +90,7 @@ class CryptoListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         select(coins[indexPath.row].symbol)
     }
     
@@ -125,7 +126,7 @@ extension CryptoListViewController : WebSocketConnectionDelegate {
                             let diffPrice: Double = price - currentPrice
                             let percentage = (diffPrice/price)
                             cell?.priceLabel.text = "\(price.currencyFormat)"
-                            cell?.tickerLabel.backgroundColor = diffPrice.sign == .minus ? .red : .green
+                            cell?.tickerLabel.backgroundColor = diffPrice.sign == .minus ? .init(red: 255.0/255.0, green: 52.0/255.0, blue: 42.0/255.0, alpha: 1) : .init(red: 46.0/255.0, green: 192.0/255.0, blue: 79.0/255.0, alpha: 1)
                             cell?.tickerLabel.text = "\(diffPrice.diffFomat)(\(percentage.percentageFormat))"
                         }
                         

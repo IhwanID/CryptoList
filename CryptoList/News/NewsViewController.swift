@@ -41,6 +41,10 @@ class NewsViewController: UITableViewController {
         }
     }
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         
         return 1
@@ -55,7 +59,7 @@ class NewsViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "newsCell") as! NewsCell
         let news = news[indexPath.row]
         cell.titleLabel.text = news.title
-        cell.sourceLabel.text = news.source
+        cell.sourceLabel.text = news.source.capitalizingFirstLetter()
         cell.bodyLabel.text = news.body
         return cell
     }
