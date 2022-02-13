@@ -19,7 +19,7 @@ iOS App that show live update cryptocurrency price with current news.
 - Using URLSession for load data coin and news
 - Using URLSessionWebSocketTask for load live price updates from Websocket
 
-## What else you could have done with more time:
+## What else could be done with more time:
 - Proper Unit Testing & Good Code Coverage (in research)
 - Unit Testing for WebSocket layer (in research)
 - Generic in Unit Testing (Reusable Testing)
