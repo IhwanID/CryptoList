@@ -11,7 +11,7 @@ class NewsViewController: UITableViewController {
     
     var service: NewsService?
     
-    private var news: [News] = [] {
+    var news: [News] = [] {
         didSet{
             DispatchQueue.main.async {
                 self.tableView.reloadData()
@@ -19,22 +19,26 @@ class NewsViewController: UITableViewController {
         }
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.title = "News"
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        fetchNews()
+    }
+    
+    func fetchNews(){
         service?.load { [weak self] result in
             switch result {
             case let .success(news):
                 self?.news = news
             case let .failure(error):
-                print(error)
+                self?.handle(error) {
+                    self?.fetchNews()
+                }
             }
         }
-        
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {

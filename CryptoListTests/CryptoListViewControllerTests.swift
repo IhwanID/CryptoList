@@ -25,8 +25,6 @@ class CryptoListViewControllerTests: XCTestCase {
     func test_viewDidLoad_initialState() throws {
         let sut = try makeSUT()
         
-        sut.loadViewIfNeeded()
-        
         XCTAssertEqual(sut.numberOfCoin(), 0)
     }
     
@@ -34,8 +32,6 @@ class CryptoListViewControllerTests: XCTestCase {
         let sut = try makeSUT()
         
         sut.coins = [makeCoin(name: "Bitcoin", symbol: "BTC", price: 100)]
-        
-        sut.loadViewIfNeeded()
         
         XCTAssertEqual(sut.numberOfCoin(), 1)
         XCTAssertEqual(sut.name(atRow: 0), "Bitcoin")
