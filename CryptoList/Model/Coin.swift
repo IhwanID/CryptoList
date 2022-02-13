@@ -14,6 +14,6 @@ struct Coin {
     let open24Hour: Double
     
     var subs: String {
-        "2~Coinbase~\(symbol)~USD"
+        "2~Binance~\(symbol)~USDT"
     }
 }
