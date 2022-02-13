@@ -31,6 +31,8 @@
 		60D9A0A527B8E8DC00C8B614 /* NewsMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D9A0A427B8E8DC00C8B614 /* NewsMapper.swift */; };
 		60D9A0A727B8EAA100C8B614 /* NewsEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D9A0A627B8EAA100C8B614 /* NewsEndpoint.swift */; };
 		60D9A0A927B8EC5A00C8B614 /* LoadNewsFromRemoteUseCaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D9A0A827B8EC5A00C8B614 /* LoadNewsFromRemoteUseCaseTest.swift */; };
+		60D9A0AB27B8F69800C8B614 /* WebSocketTaskConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D9A0AA27B8F69800C8B614 /* WebSocketTaskConnection.swift */; };
+		60D9A0AD27B8FEFF00C8B614 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D9A0AC27B8FEFF00C8B614 /* UIViewControllerExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +73,8 @@
 		60D9A0A427B8E8DC00C8B614 /* NewsMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsMapper.swift; sourceTree = "<group>"; };
 		60D9A0A627B8EAA100C8B614 /* NewsEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsEndpoint.swift; sourceTree = "<group>"; };
 		60D9A0A827B8EC5A00C8B614 /* LoadNewsFromRemoteUseCaseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadNewsFromRemoteUseCaseTest.swift; sourceTree = "<group>"; };
+		60D9A0AA27B8F69800C8B614 /* WebSocketTaskConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketTaskConnection.swift; sourceTree = "<group>"; };
+		60D9A0AC27B8FEFF00C8B614 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +100,7 @@
 			children = (
 				602DECFD27B7B71700AA0775 /* DictionaryExtension.swift */,
 				60B8547527B884F3008D0CE4 /* DoubleExtension.swift */,
+				60D9A0AC27B8FEFF00C8B614 /* UIViewControllerExtension.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -170,6 +175,7 @@
 				60B8548027B8CDE4008D0CE4 /* News */,
 				60B8547F27B8CDD4008D0CE4 /* Crypto */,
 				60B8547927B8AF28008D0CE4 /* HTTPClient.swift */,
+				60D9A0AA27B8F69800C8B614 /* WebSocketTaskConnection.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -327,7 +333,9 @@
 				60B8547A27B8AF28008D0CE4 /* HTTPClient.swift in Sources */,
 				6046E1D427B6C904001D3F0F /* Coin.swift in Sources */,
 				609BBE4027B745A30085290B /* NewsCell.swift in Sources */,
+				60D9A0AB27B8F69800C8B614 /* WebSocketTaskConnection.swift in Sources */,
 				60D9A0A727B8EAA100C8B614 /* NewsEndpoint.swift in Sources */,
+				60D9A0AD27B8FEFF00C8B614 /* UIViewControllerExtension.swift in Sources */,
 				60B8547627B884F3008D0CE4 /* DoubleExtension.swift in Sources */,
 				6046E1C827B6AAD7001D3F0F /* NewsViewController.swift in Sources */,
 			);

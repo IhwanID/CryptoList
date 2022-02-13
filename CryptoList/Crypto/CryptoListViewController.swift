@@ -10,10 +10,8 @@ import UIKit
 class CryptoListViewController: UITableViewController {
     
     var service: CryptoService?
-    private var webSocket: URLSessionWebSocketTask?
+    var webSocketConnection: WebSocketConnection?
     var select: (String) -> Void = { _ in }
-    
-    let url = URL(string: "wss://streamer.cryptocompare.com/v2?api_key=7b9eee5bd406bb262532c51c3665375786b10d5b45c17bf0772d687b15842111")!
     
     private var coins: [Coin] = [] {
         didSet{
@@ -27,13 +25,9 @@ class CryptoListViewController: UITableViewController {
         super.viewDidLoad()
         refreshControl = UIRefreshControl()
         refreshControl?.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
-        
-        let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
-        
-        webSocket = session.webSocketTask(with: url)
-        webSocket?.resume()
-        
-        
+        webSocketConnection?.delegate = self
+        webSocketConnection?.connect()
+ 
     }
     
     @objc private func refresh(_ sender: Any) {
@@ -50,6 +44,15 @@ class CryptoListViewController: UITableViewController {
             switch result {
             case let .success(coins):
                 self?.coins = coins
+                let subRequest = [
+                    "action": "SubAdd",
+                    "subs": coins.map{$0.subs}
+                ] as [String : Any]
+                
+                if let requestString = subRequest.toJSONString() {
+                    self?.webSocketConnection?.send(text: requestString)
+                }
+               
             case let .failure(error):
                 DispatchQueue.main.async {
                     self?.handle(error) {
@@ -90,103 +93,45 @@ class CryptoListViewController: UITableViewController {
     
 }
 
-extension CryptoListViewController: URLSessionWebSocketDelegate {
-    func send() {
-        DispatchQueue.global().asyncAfter(deadline: .now()+1) {
-            let subRequest = [
-                "action": "SubAdd",
-                "subs": self.coins.map{$0.subs}
-            ] as [String : Any]
-            
-            if let requestString = subRequest.toJSONString() {
-                self.webSocket?.send(.string(requestString), completionHandler: { error in
-                    if error != nil {
-                        print("===> Error Send")
-                    }
-                })
-            }
-            
-            
-            
-        }
+extension CryptoListViewController : WebSocketConnectionDelegate {
+    
+    func onDisconnected(connection: WebSocketConnection, error: Error?) {
+        print("==> onDisconnected")
     }
     
-    func receive() {
-        webSocket?.receive(completionHandler: { [weak self] result in
-            switch result {
-                case .failure:
-                    break
-                case .success(let message):
-                    switch message {
-                    case .string(let text):
-                        let data = Data(text.utf8)
-                        let json = try! JSONSerialization.jsonObject(with: data, options: []) as? [String : Any]
-                        
-                        if let type = (json?["TYPE"] as? NSString)?.intValue {
-                            if type == 2 {
-                                let price: Double = json?["PRICE"] as? Double ?? 0
-                                let symbol: String = json?["FROMSYMBOL"] as! String
-                                
-                                if price > 0 {
-                                    if let row: Int = self?.coins.firstIndex(where: {$0.symbol == symbol}) {
-                                        DispatchQueue.main.async {
-                                            let indexPath: IndexPath = NSIndexPath(row: row, section: 0) as IndexPath
-                                            let cell = self?.tableView.cellForRow(at: indexPath) as! CryptoCell?
-                                            let currentPrice = self?.coins[row].open24Hour ?? 0
-                                           
-                                            let diffPrice: Double = price - currentPrice
-                                            let percentage = (diffPrice/price)
-                                            cell?.priceLabel.text = "\(price.currencyFormat)"
-                                            cell?.tickerLabel.backgroundColor = diffPrice.sign == .minus ? .red : .green
-                                            cell?.tickerLabel.text = "\(diffPrice.diffFomat)(\(percentage.percentageFormat))"
-                                        }
-                                        
-                                    }
-                                }
-                               
-                            }
+    func onError(connection: WebSocketConnection, error: Error) {
+        print("==> onError")
+    }
+    
+    func onMessage(connection: WebSocketConnection, text: String) {
+        
+        let data = Data(text.utf8)
+        let json = try! JSONSerialization.jsonObject(with: data, options: []) as? [String : Any]
+        
+        if let type = (json?["TYPE"] as? NSString)?.intValue {
+            if type == 2 {
+                let price: Double = json?["PRICE"] as? Double ?? 0
+                let symbol: String = json?["FROMSYMBOL"] as! String
+                
+                if price > 0 {
+                    if let row: Int = self.coins.firstIndex(where: {$0.symbol == symbol}) {
+                        DispatchQueue.main.async {
+                            let indexPath: IndexPath = NSIndexPath(row: row, section: 0) as IndexPath
+                            let cell = self.tableView.cellForRow(at: indexPath) as! CryptoCell?
+                            let currentPrice = self.coins[row].open24Hour
+                           
+                            let diffPrice: Double = price - currentPrice
+                            let percentage = (diffPrice/price)
+                            cell?.priceLabel.text = "\(price.currencyFormat)"
+                            cell?.tickerLabel.backgroundColor = diffPrice.sign == .minus ? .red : .green
+                            cell?.tickerLabel.text = "\(diffPrice.diffFomat)(\(percentage.percentageFormat))"
                         }
-                    case .data:
-                        break
-                    @unknown default:
-                        break
+                        
                     }
                 }
-            
-            
-            self?.receive()
-        })
-    }
-    
-    func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didOpenWithProtocol protocol: String?) {
-        send()
-        receive()
-    }
-    
-}
-
-extension UIViewController {
-    func handle(_ error: Error, completion: @escaping () -> ()) {
-        let alert = UIAlertController(
-            title: "An error occured",
-            message: error.localizedDescription,
-            preferredStyle: .alert
-        )
-        
-        alert.addAction(UIAlertAction(
-            title: "Dismiss",
-            style: .default
-        ))
-        
-        alert.addAction(UIAlertAction(
-            title: "Retry",
-            style: .default,
-            handler: { _ in
-                completion()
+               
             }
-        ))
-        
-        present(alert, animated: true)
+        }
     }
-}
 
+}
