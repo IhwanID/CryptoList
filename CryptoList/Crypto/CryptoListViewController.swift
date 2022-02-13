@@ -43,7 +43,7 @@ class CryptoListViewController: UITableViewController {
     
     func fetchData(){
         refreshControl?.beginRefreshing()
-        service.loadCrypto(limit: 50) { [weak self] result in
+        service.loadCrypto(limit: 51) { [weak self] result in
             switch result {
             case let .success(coins):
                 self?.coins = coins
@@ -76,7 +76,7 @@ class CryptoListViewController: UITableViewController {
         let coin = coins[indexPath.row]
         cell.coinNameLabel.text = coin.name
         cell.coinSymbolLabel.text = coin.symbol
-        cell.priceLabel.text = "$ \(coin.price)"
+        cell.priceLabel.text = "\(coin.price.currencyFormat)"
         
         return cell
     }
@@ -131,20 +131,23 @@ extension CryptoListViewController: URLSessionWebSocketDelegate {
                                 let price: Double = json?["PRICE"] as? Double ?? 0
                                 let symbol: String = json?["FROMSYMBOL"] as! String
                                 
-                                if let row: Int = self?.coins.firstIndex(where: {$0.symbol == symbol}) {
-                                    DispatchQueue.main.async {
-                                        let indexPath: IndexPath = NSIndexPath(row: row, section: 0) as IndexPath
-                                        let cell = self?.tableView.cellForRow(at: indexPath) as! CryptoCell?
-                                        let currentPrice = self?.coins[row].open24Hour ?? 0
-                                       
-                                        let diffPrice: Double = price - currentPrice
-                                        let percentage = (diffPrice/price) * 100
-                                        cell?.priceLabel.text = "$ \(price)"
-                                        cell?.tickerLabel.backgroundColor = diffPrice.sign == .minus ? .red : .green
-                                        cell?.tickerLabel.text = "\(diffPrice)(\(percentage)%)"
+                                if price > 0 {
+                                    if let row: Int = self?.coins.firstIndex(where: {$0.symbol == symbol}) {
+                                        DispatchQueue.main.async {
+                                            let indexPath: IndexPath = NSIndexPath(row: row, section: 0) as IndexPath
+                                            let cell = self?.tableView.cellForRow(at: indexPath) as! CryptoCell?
+                                            let currentPrice = self?.coins[row].open24Hour ?? 0
+                                           
+                                            let diffPrice: Double = price - currentPrice
+                                            let percentage = (diffPrice/price)
+                                            cell?.priceLabel.text = "\(price.currencyFormat)"
+                                            cell?.tickerLabel.backgroundColor = diffPrice.sign == .minus ? .red : .green
+                                            cell?.tickerLabel.text = "\(diffPrice.diffFomat)(\(percentage.percentageFormat))"
+                                        }
+                                        
                                     }
-                                    
                                 }
+                               
                             }
                         }
                     case .data:
