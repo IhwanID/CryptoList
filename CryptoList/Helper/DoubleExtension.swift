@@ -21,6 +21,8 @@ extension Formatter {
         formatter.maximumFractionDigits = 2
         formatter.numberStyle = .decimal
         formatter.groupingSeparator = "."
+        formatter.positivePrefix = formatter.plusSign
+        formatter.negativePrefix = formatter.minusSign
         return formatter
     }()
     
@@ -29,6 +31,8 @@ extension Formatter {
         formatter.maximumFractionDigits = 2
         formatter.numberStyle = .percent
         formatter.groupingSeparator = "."
+        formatter.positivePrefix = formatter.plusSign
+        formatter.negativePrefix = formatter.minusSign
         return formatter
     }()
 }

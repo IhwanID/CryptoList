@@ -11,32 +11,32 @@
         <scene sceneID="QUL-69-jjl">
             <objects>
                 <tableViewController id="Asc-Bx-WJC" customClass="CryptoListViewController" customModule="CryptoList" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="Moh-KD-8mW">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="Moh-KD-8mW">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="0.0" reuseIdentifier="cryptoCell" rowHeight="65" id="ecP-fr-rly" customClass="CryptoCell" customModule="CryptoList" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="44.5" width="414" height="65"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="0.0" reuseIdentifier="cryptoCell" rowHeight="83" id="ecP-fr-rly" customClass="CryptoCell" customModule="CryptoList" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="44.5" width="414" height="83"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ecP-fr-rly" id="Bl5-Dg-7hd">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="65"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="83"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="OlS-yW-5Ax">
-                                            <rect key="frame" x="16" y="8" width="382" height="49"/>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="OlS-yW-5Ax">
+                                            <rect key="frame" x="16" y="10" width="382" height="63"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="XPe-Y3-LCh">
-                                                    <rect key="frame" x="0.0" y="0.0" width="382" height="24.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="382" height="29.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BTC" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jZh-yz-yJN">
-                                                            <rect key="frame" x="0.0" y="0.0" width="28.5" height="24.5"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="28.5" height="29.5"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fu0-32-v7N">
-                                                            <rect key="frame" x="332" y="0.0" width="50" height="24.5"/>
+                                                            <rect key="frame" x="332" y="0.0" width="50" height="29.5"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -44,16 +44,16 @@
                                                     </subviews>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" translatesAutoresizingMaskIntoConstraints="NO" id="Knr-ZG-jFb">
-                                                    <rect key="frame" x="0.0" y="24.5" width="382" height="24.5"/>
+                                                    <rect key="frame" x="0.0" y="33.5" width="382" height="29.5"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Bitcoin" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZjD-ZD-mJC">
-                                                            <rect key="frame" x="0.0" y="0.0" width="44.5" height="24.5"/>
-                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                            <nil key="textColor"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="36.5" height="29.5"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0(0%)" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5IF-Wm-BXg">
-                                                            <rect key="frame" x="341" y="0.0" width="41" height="24.5"/>
+                                                            <rect key="frame" x="341" y="0.0" width="41" height="29.5"/>
                                                             <color key="backgroundColor" systemColor="systemGrayColor"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" relation="lessThanOrEqual" constant="30" id="xGS-zj-VvC"/>
@@ -74,8 +74,8 @@
                                         </stackView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="bottom" secondItem="OlS-yW-5Ax" secondAttribute="bottom" constant="8" id="Mk5-zR-rgB"/>
-                                        <constraint firstItem="OlS-yW-5Ax" firstAttribute="top" secondItem="Bl5-Dg-7hd" secondAttribute="top" constant="8" id="Oqx-h9-Hvx"/>
+                                        <constraint firstAttribute="bottom" secondItem="OlS-yW-5Ax" secondAttribute="bottom" constant="10" id="Mk5-zR-rgB"/>
+                                        <constraint firstItem="OlS-yW-5Ax" firstAttribute="top" secondItem="Bl5-Dg-7hd" secondAttribute="top" constant="10" id="Oqx-h9-Hvx"/>
                                         <constraint firstItem="OlS-yW-5Ax" firstAttribute="leading" secondItem="Bl5-Dg-7hd" secondAttribute="leading" constant="16" id="n6M-Bh-CI4"/>
                                         <constraint firstAttribute="trailing" secondItem="OlS-yW-5Ax" secondAttribute="trailing" constant="16" id="vGJ-pu-IC6"/>
                                     </constraints>
@@ -98,7 +98,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1hA-6o-yGc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="490" y="-48"/>
+            <point key="canvasLocation" x="489.85507246376818" y="-48.214285714285715"/>
         </scene>
         <!--News View Controller-->
         <scene sceneID="NW5-FJ-A6r">
