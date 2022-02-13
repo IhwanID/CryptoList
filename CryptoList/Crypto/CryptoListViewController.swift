@@ -29,7 +29,7 @@ class CryptoListViewController: UITableViewController {
         refreshControl?.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
         webSocketConnection?.delegate = self
         webSocketConnection?.connect()
- 
+        
     }
     
     @objc private func refresh(_ sender: Any) {
@@ -54,7 +54,7 @@ class CryptoListViewController: UITableViewController {
                 if let requestString = subRequest.toJSONString() {
                     self?.webSocketConnection?.send(text: requestString)
                 }
-               
+                
             case let .failure(error):
                 DispatchQueue.main.async {
                     self?.handle(error) {
@@ -82,9 +82,8 @@ class CryptoListViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cryptoCell") as! CryptoCell
         let coin = coins[indexPath.row]
-        cell.coinNameLabel.text = coin.name
-        cell.coinSymbolLabel.text = coin.symbol
-        cell.priceLabel.text = "\(coin.price.currencyFormat)"
+        let vm = CryptoItemViewModel(coin: coin, livePrice: coin.price)
+        cell.configure(vm)
         
         return cell
     }
@@ -121,20 +120,15 @@ extension CryptoListViewController : WebSocketConnectionDelegate {
                         DispatchQueue.main.async {
                             let indexPath: IndexPath = NSIndexPath(row: row, section: 0) as IndexPath
                             let cell = self.tableView.cellForRow(at: indexPath) as! CryptoCell?
-                            let currentPrice = self.coins[row].open24Hour
-                           
-                            let diffPrice: Double = price - currentPrice
-                            let percentage = (diffPrice/price)
-                            cell?.priceLabel.text = "\(price.currencyFormat)"
-                            cell?.tickerLabel.backgroundColor = diffPrice.sign == .minus ? .init(red: 255.0/255.0, green: 52.0/255.0, blue: 42.0/255.0, alpha: 1) : .init(red: 46.0/255.0, green: 192.0/255.0, blue: 79.0/255.0, alpha: 1)
-                            cell?.tickerLabel.text = "\(diffPrice.diffFomat)(\(percentage.percentageFormat))"
+                            let vm = CryptoItemViewModel(coin: self.coins[row], livePrice: price)
+                            cell?.configure(vm)
                         }
                         
                     }
                 }
-               
+                
             }
         }
     }
-
+    
 }
