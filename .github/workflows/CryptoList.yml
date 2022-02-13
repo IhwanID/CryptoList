@@ -1,0 +1,19 @@
+name: CryptoList
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+
+    runs-on: macos-latest
+    
+    timeout-minutes: 10
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Select Xcode
+      run: sudo xcode-select -switch /Applications/Xcode_13.2.app
+    - name: Build and Test
+      run: xcodebuild test -project CryptoList.xcodeproj -scheme "CryptoList" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -sdk iphonesimulator -destination "platform=iOS Simulator,name=iPhone 13,OS=15.2" ONLY_ACTIVE_ARCH=YES SWIFT_TREAT_WARNINGS_AS_ERRORS=YES
