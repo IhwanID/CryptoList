@@ -13,7 +13,7 @@ class CryptoListViewController: UITableViewController {
     var webSocketConnection: WebSocketConnection?
     var select: (String) -> Void = { _ in }
     
-    private var coins: [Coin] = [] {
+    var coins: [Coin] = [] {
         didSet{
             DispatchQueue.main.async {
                 self.tableView.reloadData()
@@ -23,6 +23,8 @@ class CryptoListViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "Toplists"
+        
         refreshControl = UIRefreshControl()
         refreshControl?.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
         webSocketConnection?.delegate = self
