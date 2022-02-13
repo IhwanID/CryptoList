@@ -12,3 +12,11 @@ class NewsCell: UITableViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var bodyLabel: UILabel!
 }
+
+extension NewsCell {
+    func configure(_ vm: NewsItemViewModel) {
+        sourceLabel.text = vm.source
+        titleLabel.text = vm.title
+        bodyLabel.text = vm.body
+    }
+}
