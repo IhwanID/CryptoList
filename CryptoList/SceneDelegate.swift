@@ -10,6 +10,12 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    
+    private lazy var httpClient: HTTPClient = {
+        URLSessionHTTPClient(session: URLSession(configuration: .ephemeral))
+    }()
+    
+    private lazy var baseURL = URL(string: "https://min-api.cryptocompare.com")!
 
     private lazy var navigationController = UINavigationController(
         rootViewController: makeCryptoListViewController(title: "Toplists"))
@@ -28,9 +34,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func makeCryptoListViewController(title: String) -> CryptoListViewController {
         let bundle = Bundle(for: CryptoListViewController.self)
         let storyboard = UIStoryboard(name: "Main", bundle: bundle)
-        let feedController = storyboard.instantiateInitialViewController() as! CryptoListViewController
-        feedController.title = title
-        return feedController
+        let vc = storyboard.instantiateInitialViewController() as! CryptoListViewController
+        vc.title = title
+        vc.service = CryptoServiceAPI(url: CryptoEndpoint.get(limit: 50).url(baseURL: baseURL), client: httpClient)
+        return vc
     }
 
 
