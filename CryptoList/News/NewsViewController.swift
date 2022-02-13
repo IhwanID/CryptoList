@@ -9,8 +9,7 @@ import UIKit
 
 class NewsViewController: UITableViewController {
     
-    let service: NewsService = NewsServiceAPI()
-    var categories: String?
+    var service: NewsService?
     
     private var news: [News] = [] {
         didSet{
@@ -27,17 +26,13 @@ class NewsViewController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if let categories = categories {
-            service.loadNews(categories: categories) { [weak self] result in
-                switch result {
-                case let .success(news):
-                    self?.news = news
-                case let .failure(error):
-                    print(error)
-                }
+        service?.load { [weak self] result in
+            switch result {
+            case let .success(news):
+                self?.news = news
+            case let .failure(error):
+                print(error)
             }
-        } else {
-            print("error")
         }
         
     }

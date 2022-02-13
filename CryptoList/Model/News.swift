@@ -12,3 +12,5 @@ struct News {
     let title: String
     let body: String
 }
+
+extension News: Equatable {}
