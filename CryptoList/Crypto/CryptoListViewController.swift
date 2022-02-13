@@ -11,7 +11,7 @@ class CryptoListViewController: UITableViewController {
     
     var service: CryptoService?
     private var webSocket: URLSessionWebSocketTask?
-    
+    var select: (String) -> Void = { _ in }
     
     let url = URL(string: "wss://streamer.cryptocompare.com/v2?api_key=7b9eee5bd406bb262532c51c3665375786b10d5b45c17bf0772d687b15842111")!
     
@@ -46,7 +46,7 @@ class CryptoListViewController: UITableViewController {
     
     func fetchData(){
         refreshControl?.beginRefreshing()
-        service?.loadCrypto(limit: 51) { [weak self] result in
+        service?.load { [weak self] result in
             switch result {
             case let .success(coins):
                 self?.coins = coins
@@ -85,14 +85,7 @@ class CryptoListViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        tableView.deselectRow(at: indexPath, animated: true)
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "newsVC") as! NewsViewController
-        vc.title = "News"
-        vc.categories = coins[indexPath.row].symbol
-        let nav = UINavigationController(rootViewController: vc)
-        showDetailViewController(nav, sender: nil)
+        select(coins[indexPath.row].symbol)
     }
     
 }

@@ -1,5 +1,5 @@
 //
-//  LoadCryptoListFromRemoteUseCaseTests.swift
+//  LoadNewsFromRemoteUseCaseTest.swift
 //  CryptoListTests
 //
 //  Created by Ihwan on 13/02/22.
@@ -8,7 +8,7 @@
 import XCTest
 @testable import CryptoList
 
-class LoadCryptoListFromRemoteUseCaseTests: XCTestCase {
+class LoadNewsFromRemoteUseCaseTest: XCTestCase {
     
     func test_init_doesNotRequestDataFromURL() {
         let (_, client) = makeSUT()
@@ -59,9 +59,9 @@ class LoadCryptoListFromRemoteUseCaseTests: XCTestCase {
 
     
     
-    private func makeSUT(url: URL = URL(string: "https://a-url.com")!, file: StaticString = #filePath, line: UInt = #line) -> (sut: CryptoService, client: HTTPClientSpy) {
+    private func makeSUT(url: URL = URL(string: "https://a-url.com")!, file: StaticString = #filePath, line: UInt = #line) -> (sut: NewsService, client: HTTPClientSpy) {
         let client = HTTPClientSpy()
-        let sut = CryptoServiceAPI(url: url, client: client)
+        let sut = NewsServiceAPI(url: url, client: client)
         trackForMemoryLeaks(sut, file: file, line: line)
         trackForMemoryLeaks(client, file: file, line: line)
         return (sut, client)
@@ -73,8 +73,8 @@ class LoadCryptoListFromRemoteUseCaseTests: XCTestCase {
     }
 }
 
-extension LoadCryptoListFromRemoteUseCaseTests {
-    func expect(_ sut: CryptoService, toCompleteWith expectedResult: Result<[Coin], CryptoServiceAPI.Error>, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
+extension LoadNewsFromRemoteUseCaseTest {
+    func expect(_ sut: NewsService, toCompleteWith expectedResult: Result<[News], NewsServiceAPI.Error>, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
         let exp = expectation(description: "Wait for load completion")
 
         sut.load { receivedResult in
@@ -82,7 +82,7 @@ extension LoadCryptoListFromRemoteUseCaseTests {
             case let (.success(receivedItems), .success(expectedItems)):
                 XCTAssertEqual(receivedItems, expectedItems, file: file, line: line)
 
-            case let (.failure(receivedError as CryptoServiceAPI.Error), .failure(expectedError)):
+            case let (.failure(receivedError as NewsServiceAPI.Error), .failure(expectedError)):
                 XCTAssertEqual(receivedError, expectedError, file: file, line: line)
 
             default:
