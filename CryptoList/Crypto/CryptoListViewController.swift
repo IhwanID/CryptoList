@@ -8,8 +8,14 @@
 import UIKit
 
 class CryptoListViewController: UITableViewController {
-    let service: CryptoService = CryptoServiceAPI()
+    
+    var service: CryptoService?
     private var webSocket: URLSessionWebSocketTask?
+    private lazy var httpClient: HTTPClient = {
+        URLSessionHTTPClient(session: URLSession(configuration: .ephemeral))
+    }()
+    
+    let url = URL(string: "wss://streamer.cryptocompare.com/v2?api_key=7b9eee5bd406bb262532c51c3665375786b10d5b45c17bf0772d687b15842111")!
     
     private var coins: [Coin] = [] {
         didSet{
@@ -24,9 +30,9 @@ class CryptoListViewController: UITableViewController {
         refreshControl = UIRefreshControl()
         refreshControl?.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
         
+        service = CryptoServiceAPI(url: URL(string: "https://min-api.cryptocompare.com/data/top/totaltoptiervolfull?limit=10&tsym=USD")!, client: httpClient)
         let session = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue())
-        let key = "7b9eee5bd406bb262532c51c3665375786b10d5b45c17bf0772d687b15842111"
-        let url = URL(string: "wss://streamer.cryptocompare.com/v2?api_key=\(key)")!
+        
         webSocket = session.webSocketTask(with: url)
         webSocket?.resume()
         
@@ -43,7 +49,7 @@ class CryptoListViewController: UITableViewController {
     
     func fetchData(){
         refreshControl?.beginRefreshing()
-        service.loadCrypto(limit: 51) { [weak self] result in
+        service?.loadCrypto(limit: 51) { [weak self] result in
             switch result {
             case let .success(coins):
                 self?.coins = coins
