@@ -14,14 +14,20 @@ iOS App that show live update cryptocurrency price with current news.
 - [x] Show the correct ticker color
 - [x] Handle network errors
 
-
 ## Solution:
 - Using URLSession for load data coin and news
 - Using URLSessionWebSocketTask for load live price updates from Websocket
+- No Third Party Library or Dependency Manager needed right now
 
 ## What else could be done with more time:
 - Proper Unit Testing & Good Code Coverage (in research)
 - Unit Testing for WebSocket layer (in research)
 - Generic in Unit Testing (Reusable Testing)
 - Modularize Networking Layer to Static Framework (Agnostic Target)
+- Refactor to VIP Clean Swift Architecture
 
+## How to install :
+- Make sure you have Xcode 13.2.1
+- Open CryptoList.xcodeproj
+- Run unit testing using `cmd + U`
+- Run project to simulator or real device using `cmd + R`
