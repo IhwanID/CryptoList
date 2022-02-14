@@ -25,13 +25,39 @@ class CryptoListViewControllerTests: XCTestCase {
     func test_viewDidLoad_initialState() throws {
         let sut = try makeSUT()
         
+        sut.loadViewIfNeeded()
+        
         XCTAssertEqual(sut.numberOfCoin(), 0)
+    }
+    
+    func test_viewDidLoad_doesNotLoadCryptoFromAPI() throws {
+        let service = CryptoServiceSpy()
+        let sut = try makeSUT()
+        sut.service = service
+        
+        sut.loadViewIfNeeded()
+        
+        XCTAssertEqual(service.loadCryptoCount, 0)
+    }
+    
+    func test_viewWillAppear_loadCoinsFromAPI() throws {
+        let service = CryptoServiceSpy()
+        let sut = try makeSUT()
+        sut.service = service
+        
+        sut.loadViewIfNeeded()
+        sut.beginAppearanceTransition(true, animated: false)
+        
+        XCTAssertEqual(service.loadCryptoCount, 1)
     }
     
     func test_viewDidLoad_rendersCoins() throws {
         let sut = try makeSUT()
         
-        sut.coins = [makeCoin(name: "Bitcoin", symbol: "BTC", price: 100)]
+        sut.service = CryptoServiceSpy(result: [makeCoin(name: "Bitcoin", symbol: "BTC", price: 100)])
+        
+        sut.loadViewIfNeeded()
+        sut.beginAppearanceTransition(true, animated: false)
         
         XCTAssertEqual(sut.numberOfCoin(), 1)
         XCTAssertEqual(sut.name(atRow: 0), "Bitcoin")
@@ -39,6 +65,7 @@ class CryptoListViewControllerTests: XCTestCase {
         XCTAssertEqual(sut.price(atRow: 0), "$100.00")
         
     }
+    
     
     func makeSUT() throws -> CryptoListViewController {
         let bundle = Bundle(for: CryptoListViewController.self)

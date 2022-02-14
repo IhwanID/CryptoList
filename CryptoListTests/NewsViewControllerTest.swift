@@ -25,13 +25,39 @@ class NewsViewControllerTests: XCTestCase {
     func test_viewDidLoad_initialState() throws {
         let sut = try makeSUT()
         
+        sut.loadViewIfNeeded()
+        
         XCTAssertEqual(sut.numberOfNews(), 0)
+    }
+    
+    func test_viewDidLoad_doesNotLoadNewsFromAPI() throws {
+        let service = NewsServiceSpy()
+        let sut = try makeSUT()
+        sut.service = service
+        
+        sut.loadViewIfNeeded()
+        
+        XCTAssertEqual(service.loadNewsCount, 0)
+    }
+    
+    func test_viewWillAppear_loadNewsFromAPI() throws {
+        let service = NewsServiceSpy()
+        let sut = try makeSUT()
+        sut.service = service
+        
+        sut.loadViewIfNeeded()
+        sut.beginAppearanceTransition(true, animated: false)
+        
+        XCTAssertEqual(service.loadNewsCount, 1)
     }
     
     func test_viewDidLoad_rendersNews() throws {
         let sut = try makeSUT()
         
-        sut.news = [makeNews(source: "A Source", title: "A News Title", body: "A Body News")]
+        sut.service = NewsServiceSpy(result: [makeNews(source: "a Source", title: "A News Title", body: "A Body News")])
+        
+        sut.loadViewIfNeeded()
+        sut.beginAppearanceTransition(true, animated: false)
         
         XCTAssertEqual(sut.numberOfNews(), 1)
         XCTAssertEqual(sut.source(atRow: 0), "A Source")
