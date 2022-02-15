@@ -15,7 +15,7 @@ class CryptoListViewController: UITableViewController {
     
     var coins: [Coin] = [] {
         didSet{
-            DispatchQueue.main.async {
+            guaranteeMainThread {
                 self.tableView.reloadData()
             }
         }
@@ -56,7 +56,7 @@ class CryptoListViewController: UITableViewController {
                 }
                 
             case let .failure(error):
-                DispatchQueue.main.async {
+                guaranteeMainThread {
                     self?.handle(error) {
                         self?.fetchData()
                     }

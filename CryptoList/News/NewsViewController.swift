@@ -13,7 +13,7 @@ class NewsViewController: UITableViewController {
     
     var news: [News] = [] {
         didSet{
-            DispatchQueue.main.async {
+            guaranteeMainThread {
                 self.tableView.reloadData()
             }
         }
@@ -34,8 +34,10 @@ class NewsViewController: UITableViewController {
             case let .success(news):
                 self?.news = news
             case let .failure(error):
-                self?.handle(error) {
-                    self?.fetchNews()
+                guaranteeMainThread {
+                    self?.handle(error) {
+                        self?.fetchNews()
+                    }
                 }
             }
         }
