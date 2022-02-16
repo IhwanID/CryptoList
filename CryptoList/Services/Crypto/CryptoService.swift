@@ -30,9 +30,7 @@ class CryptoServiceAPI: CryptoService {
     }
     
     func load(completion: @escaping (CryptoService.Result) -> Void) {
-        client.get(from: url) { [weak self] result in
-            guard self != nil else { return }
-            
+        client.get(from: url) { result in
             switch result {
             case let .success((data, response)):
                 completion(CryptoMapper.map(data: data, response: response))
