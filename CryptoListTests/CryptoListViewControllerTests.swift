@@ -33,7 +33,7 @@ class CryptoListViewControllerTests: XCTestCase {
     func test_viewDidLoad_doesNotLoadCryptoFromAPI() throws {
         let service = CryptoServiceSpy()
         let sut = try makeSUT()
-        sut.service = service
+        sut.viewModel = CryptoListViewModel(service: service)
         
         sut.loadViewIfNeeded()
         
@@ -43,7 +43,7 @@ class CryptoListViewControllerTests: XCTestCase {
     func test_viewWillAppear_loadCoinsFromAPI() throws {
         let service = CryptoServiceSpy()
         let sut = try makeSUT()
-        sut.service = service
+        sut.viewModel = CryptoListViewModel(service: service)
         
         sut.loadViewIfNeeded()
         sut.beginAppearanceTransition(true, animated: false)
@@ -53,8 +53,8 @@ class CryptoListViewControllerTests: XCTestCase {
     
     func test_viewDidLoad_rendersCoins() throws {
         let sut = try makeSUT()
-        
-        sut.service = CryptoServiceSpy(result: [makeCoin(name: "Bitcoin", symbol: "BTC", price: 100)])
+        let service = CryptoServiceSpy(result: [makeCoin(name: "Bitcoin", symbol: "BTC", price: 100)])
+        sut.viewModel = CryptoListViewModel(service: service)
         
         sut.loadViewIfNeeded()
         sut.beginAppearanceTransition(true, animated: false)
@@ -69,7 +69,7 @@ class CryptoListViewControllerTests: XCTestCase {
     func test_viewWillAppear_failedAPIResponse_showsError() throws {
         let service = CryptoServiceSpy(result: AnyError(errorDescription: "Error: Failed API Response"))
         let sut = try makeTestableSUT()
-        sut.service = service
+        sut.viewModel = CryptoListViewModel(service: service)
         sut.loadViewIfNeeded()
         sut.beginAppearanceTransition(true, animated: false)
         
