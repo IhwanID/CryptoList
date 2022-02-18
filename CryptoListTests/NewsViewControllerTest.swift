@@ -33,7 +33,7 @@ class NewsViewControllerTests: XCTestCase {
     func test_viewDidLoad_doesNotLoadNewsFromAPI() throws {
         let service = NewsServiceSpy()
         let sut = try makeSUT()
-        sut.service = service
+        sut.viewModel = NewsViewModel(service: service)
         
         sut.loadViewIfNeeded()
         
@@ -43,7 +43,7 @@ class NewsViewControllerTests: XCTestCase {
     func test_viewWillAppear_failedAPIResponse_showsError() throws {
         let service = NewsServiceSpy(result: AnyError(errorDescription: "Error: Failed API Response"))
         let sut = try makeTestableSUT()
-        sut.service = service
+        sut.viewModel = NewsViewModel(service: service)
         sut.loadViewIfNeeded()
         sut.beginAppearanceTransition(true, animated: false)
         
@@ -53,7 +53,7 @@ class NewsViewControllerTests: XCTestCase {
     func test_viewWillAppear_loadNewsFromAPI() throws {
         let service = NewsServiceSpy()
         let sut = try makeSUT()
-        sut.service = service
+        sut.viewModel = NewsViewModel(service: service)
         
         sut.loadViewIfNeeded()
         sut.beginAppearanceTransition(true, animated: false)
@@ -63,8 +63,8 @@ class NewsViewControllerTests: XCTestCase {
     
     func test_viewDidLoad_rendersNews() throws {
         let sut = try makeSUT()
-        
-        sut.service = NewsServiceSpy(result: [makeNews(source: "a Source", title: "A News Title", body: "A Body News")])
+        let service =  NewsServiceSpy(result: [makeNews(source: "a Source", title: "A News Title", body: "A Body News")])
+        sut.viewModel = NewsViewModel(service: service)
         
         sut.loadViewIfNeeded()
         sut.beginAppearanceTransition(true, animated: false)

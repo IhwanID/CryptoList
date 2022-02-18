@@ -50,7 +50,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let bundle = Bundle(for: NewsViewController.self)
         let storyboard = UIStoryboard(name: "Main", bundle: bundle)
         let vc = storyboard.instantiateViewController(withIdentifier: "newsVC") as! NewsViewController
-        vc.service = NewsServiceAPI(url: NewsEndpoint.get(category: category).url(baseURL: baseURL), client: httpClient)
+        vc.viewModel = NewsViewModel(service: NewsServiceAPI(url: NewsEndpoint.get(category: category).url(baseURL: baseURL), client: httpClient))
         return vc
     }
 
