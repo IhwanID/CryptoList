@@ -19,7 +19,7 @@ enum NewsMapper {
             data.map{ News(source: $0.source, title: $0.title, body: $0.body)}
         }
     }
-
+    
     struct NewsResponse: Codable {
         let title: String
         let source: String
@@ -27,7 +27,7 @@ enum NewsMapper {
     }
     
     private static var statusCode200: Int { return 200 }
-
+    
     static func map(data: Data, response: HTTPURLResponse) -> NewsService.Result {
         guard response.statusCode == statusCode200, let data = try? JSONDecoder().decode(NewsRootResponse.self, from: data) else {
             return .failure(NewsServiceAPI.Error.invalidData)

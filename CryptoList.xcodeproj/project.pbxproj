@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		60220DC627C0049600462651 /* CryptoEndpointTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60220DC527C0049500462651 /* CryptoEndpointTest.swift */; };
+		60220DC827C0069300462651 /* NewsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60220DC727C0069300462651 /* NewsViewModel.swift */; };
+		60220DCA27C00CCA00462651 /* CryptoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60220DC927C00CCA00462651 /* CryptoListViewModel.swift */; };
+		6024752527BC61AC00CB6F77 /* NewsEndpointTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6024752427BC61AC00CB6F77 /* NewsEndpointTest.swift */; };
 		602DECFE27B7B71700AA0775 /* DictionaryExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 602DECFD27B7B71700AA0775 /* DictionaryExtension.swift */; };
 		6046E19627B69D28001D3F0F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6046E19527B69D28001D3F0F /* AppDelegate.swift */; };
 		6046E19827B69D28001D3F0F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6046E19727B69D28001D3F0F /* SceneDelegate.swift */; };
@@ -53,6 +57,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		60220DC527C0049500462651 /* CryptoEndpointTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoEndpointTest.swift; sourceTree = "<group>"; };
+		60220DC727C0069300462651 /* NewsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewModel.swift; sourceTree = "<group>"; };
+		60220DC927C00CCA00462651 /* CryptoListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoListViewModel.swift; sourceTree = "<group>"; };
+		6024752427BC61AC00CB6F77 /* NewsEndpointTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsEndpointTest.swift; sourceTree = "<group>"; };
 		602DECFD27B7B71700AA0775 /* DictionaryExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryExtension.swift; sourceTree = "<group>"; };
 		6046E19227B69D28001D3F0F /* CryptoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CryptoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6046E19527B69D28001D3F0F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -164,6 +172,8 @@
 				60D9A0A827B8EC5A00C8B614 /* LoadNewsFromRemoteUseCaseTest.swift */,
 				60A787CB27B92739007F8C33 /* CryptoListViewControllerTests.swift */,
 				60A787CD27B934E4007F8C33 /* NewsViewControllerTest.swift */,
+				6024752427BC61AC00CB6F77 /* NewsEndpointTest.swift */,
+				60220DC527C0049500462651 /* CryptoEndpointTest.swift */,
 			);
 			path = CryptoListTests;
 			sourceTree = "<group>";
@@ -172,6 +182,7 @@
 			isa = PBXGroup;
 			children = (
 				6046E1C727B6AAD7001D3F0F /* NewsViewController.swift */,
+				60220DC727C0069300462651 /* NewsViewModel.swift */,
 				609BBE3F27B745A30085290B /* NewsCell.swift */,
 				60A787D327B965C1007F8C33 /* NewsItemViewModel.swift */,
 			);
@@ -182,6 +193,7 @@
 			isa = PBXGroup;
 			children = (
 				6046E1C527B6AABA001D3F0F /* CryptoListViewController.swift */,
+				60220DC927C00CCA00462651 /* CryptoListViewModel.swift */,
 				6046E1CE27B6C7B1001D3F0F /* CryptoCell.swift */,
 				60A787D127B95DB7007F8C33 /* CryptoItemViewModel.swift */,
 			);
@@ -353,8 +365,10 @@
 				60A787D227B95DB7007F8C33 /* CryptoItemViewModel.swift in Sources */,
 				60B8547C27B8B51F008D0CE4 /* CryptoMapper.swift in Sources */,
 				60B8547A27B8AF28008D0CE4 /* HTTPClient.swift in Sources */,
+				60220DCA27C00CCA00462651 /* CryptoListViewModel.swift in Sources */,
 				60A787D027B94BE1007F8C33 /* StringExtension.swift in Sources */,
 				6046E1D427B6C904001D3F0F /* Coin.swift in Sources */,
+				60220DC827C0069300462651 /* NewsViewModel.swift in Sources */,
 				60A787D427B965C1007F8C33 /* NewsItemViewModel.swift in Sources */,
 				609BBE4027B745A30085290B /* NewsCell.swift in Sources */,
 				60D9A0AB27B8F69800C8B614 /* WebSocketTaskConnection.swift in Sources */,
@@ -371,12 +385,14 @@
 			files = (
 				6056539527B9E30A00363EB1 /* CryptoServiceSpy.swift in Sources */,
 				6056539727B9E69D00363EB1 /* NewsServiceSpy.swift in Sources */,
+				6024752527BC61AC00CB6F77 /* NewsEndpointTest.swift in Sources */,
 				60A787CC27B92739007F8C33 /* CryptoListViewControllerTests.swift in Sources */,
 				60D9A0A927B8EC5A00C8B614 /* LoadNewsFromRemoteUseCaseTest.swift in Sources */,
 				60B8548227B8D1A5008D0CE4 /* LoadCryptoListFromRemoteUseCaseTests.swift in Sources */,
 				60A787CE27B934E4007F8C33 /* NewsViewControllerTest.swift in Sources */,
 				60B8548927B8D4F3008D0CE4 /* XCTestCaseExtension.swift in Sources */,
 				60B8548727B8D47A008D0CE4 /* HTTPClientSpy.swift in Sources */,
+				60220DC627C0049600462651 /* CryptoEndpointTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -461,7 +477,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -516,7 +532,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -533,12 +549,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = TVFQAT4MZP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CryptoList/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -559,12 +577,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = TVFQAT4MZP;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CryptoList/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -583,8 +603,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = TVFQAT4MZP;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				MARKETING_VERSION = 1.0;
@@ -602,8 +624,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = TVFQAT4MZP;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
 				MARKETING_VERSION = 1.0;

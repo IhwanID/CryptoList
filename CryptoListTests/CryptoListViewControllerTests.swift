@@ -33,7 +33,7 @@ class CryptoListViewControllerTests: XCTestCase {
     func test_viewDidLoad_doesNotLoadCryptoFromAPI() throws {
         let service = CryptoServiceSpy()
         let sut = try makeSUT()
-        sut.service = service
+        sut.viewModel = CryptoListViewModel(service: service)
         
         sut.loadViewIfNeeded()
         
@@ -43,7 +43,7 @@ class CryptoListViewControllerTests: XCTestCase {
     func test_viewWillAppear_loadCoinsFromAPI() throws {
         let service = CryptoServiceSpy()
         let sut = try makeSUT()
-        sut.service = service
+        sut.viewModel = CryptoListViewModel(service: service)
         
         sut.loadViewIfNeeded()
         sut.beginAppearanceTransition(true, animated: false)
@@ -53,8 +53,8 @@ class CryptoListViewControllerTests: XCTestCase {
     
     func test_viewDidLoad_rendersCoins() throws {
         let sut = try makeSUT()
-        
-        sut.service = CryptoServiceSpy(result: [makeCoin(name: "Bitcoin", symbol: "BTC", price: 100)])
+        let service = CryptoServiceSpy(result: [makeCoin(name: "Bitcoin", symbol: "BTC", price: 100)])
+        sut.viewModel = CryptoListViewModel(service: service)
         
         sut.loadViewIfNeeded()
         sut.beginAppearanceTransition(true, animated: false)
@@ -66,6 +66,16 @@ class CryptoListViewControllerTests: XCTestCase {
         
     }
     
+    func test_viewWillAppear_failedAPIResponse_showsError() throws {
+        let service = CryptoServiceSpy(result: AnyError(errorDescription: "Error: Failed API Response"))
+        let sut = try makeTestableSUT()
+        sut.viewModel = CryptoListViewModel(service: service)
+        sut.loadViewIfNeeded()
+        sut.beginAppearanceTransition(true, animated: false)
+        
+        XCTAssertEqual(sut.errorMessage(), "Error: Failed API Response")
+    }
+    
     
     func makeSUT() throws -> CryptoListViewController {
         let bundle = Bundle(for: CryptoListViewController.self)
@@ -75,6 +85,21 @@ class CryptoListViewControllerTests: XCTestCase {
         let sut = try XCTUnwrap(initialVC as? CryptoListViewController)
         return sut
     }
+    
+    func makeTestableSUT() throws -> TestableCryptoListViewController {
+        let bundle = Bundle(for: CryptoListViewController.self)
+        let sb = UIStoryboard(name: "Main", bundle: bundle)
+        
+        let initialVC = sb.instantiateInitialViewController { coder in
+            return TestableCryptoListViewController(coder: coder)
+        }
+        let sut = try XCTUnwrap(initialVC)
+        return sut
+    }
+}
+
+struct AnyError: LocalizedError {
+    var errorDescription: String?
 }
 
 private func makeCoin(name: String, symbol: String, price: Double) -> Coin {
@@ -107,4 +132,17 @@ extension CryptoListViewController {
     
     private var coinSection: Int { 0 }
     
+}
+
+class TestableCryptoListViewController: CryptoListViewController {
+    var presentedVC: UIViewController?
+    
+    override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
+        presentedVC = viewControllerToPresent
+    }
+    
+    func errorMessage() -> String? {
+        let alert = presentedVC as? UIAlertController
+        return alert?.message
+    }
 }

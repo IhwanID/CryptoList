@@ -8,14 +8,13 @@
 import UIKit
 
 class CryptoListViewController: UITableViewController {
-    
-    var service: CryptoService?
+    var viewModel: CryptoListViewModel?
     var webSocketConnection: WebSocketConnection?
     var select: (String) -> Void = { _ in }
     
-    var coins: [Coin] = [] {
+    private var coins: [Coin] = [] {
         didSet{
-            DispatchQueue.main.async {
+            guaranteeMainThread {
                 self.tableView.reloadData()
             }
         }
@@ -30,43 +29,41 @@ class CryptoListViewController: UITableViewController {
         webSocketConnection?.delegate = self
         webSocketConnection?.connect()
         
-    }
-    
-    @objc private func refresh(_ sender: Any) {
-        fetchData()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        fetchData()
-    }
-    
-    func fetchData(){
-        refreshControl?.beginRefreshing()
-        service?.load { [weak self] result in
-            switch result {
-            case let .success(coins):
-                self?.coins = coins
-                let subRequest = [
-                    "action": "SubAdd",
-                    "subs": coins.map{$0.subs}
-                ] as [String : Any]
-                
-                if let requestString = subRequest.toJSONString() {
-                    self?.webSocketConnection?.send(text: requestString)
-                }
-                
-            case let .failure(error):
-                DispatchQueue.main.async {
-                    self?.handle(error) {
-                        self?.fetchData()
-                    }
-                }
+        viewModel?.onCoinsLoad = { [weak self] coins in
+            self?.coins = coins
+            let subRequest = [
+                "action": "SubAdd",
+                "subs": coins.map{$0.subs}
+            ] as [String : Any]
+            
+            if let requestString = subRequest.toJSONString() {
+                self?.webSocketConnection?.send(text: requestString)
             }
-            DispatchQueue.main.async {
+            guaranteeMainThread {
                 self?.refreshControl?.endRefreshing()
             }
         }
         
+        viewModel?.onCoinsError = { [weak self] error in
+            guaranteeMainThread {
+                self?.refreshControl?.endRefreshing()
+                self?.handle(error) {
+                    self?.viewModel?.fetchCoins()
+                }
+            }
+        }
+        
+    }
+    
+    @objc private func refresh(_ sender: Any) {
+        refreshControl?.beginRefreshing()
+        viewModel?.fetchCoins()
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        refreshControl?.beginRefreshing()
+        viewModel?.fetchCoins()
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {

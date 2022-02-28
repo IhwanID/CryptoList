@@ -33,17 +33,27 @@ class NewsViewControllerTests: XCTestCase {
     func test_viewDidLoad_doesNotLoadNewsFromAPI() throws {
         let service = NewsServiceSpy()
         let sut = try makeSUT()
-        sut.service = service
+        sut.viewModel = NewsViewModel(service: service)
         
         sut.loadViewIfNeeded()
         
         XCTAssertEqual(service.loadNewsCount, 0)
     }
     
+    func test_viewWillAppear_failedAPIResponse_showsError() throws {
+        let service = NewsServiceSpy(result: AnyError(errorDescription: "Error: Failed API Response"))
+        let sut = try makeTestableSUT()
+        sut.viewModel = NewsViewModel(service: service)
+        sut.loadViewIfNeeded()
+        sut.beginAppearanceTransition(true, animated: false)
+        
+        XCTAssertEqual(sut.errorMessage(), "Error: Failed API Response")
+    }
+    
     func test_viewWillAppear_loadNewsFromAPI() throws {
         let service = NewsServiceSpy()
         let sut = try makeSUT()
-        sut.service = service
+        sut.viewModel = NewsViewModel(service: service)
         
         sut.loadViewIfNeeded()
         sut.beginAppearanceTransition(true, animated: false)
@@ -53,8 +63,8 @@ class NewsViewControllerTests: XCTestCase {
     
     func test_viewDidLoad_rendersNews() throws {
         let sut = try makeSUT()
-        
-        sut.service = NewsServiceSpy(result: [makeNews(source: "a Source", title: "A News Title", body: "A Body News")])
+        let service =  NewsServiceSpy(result: [makeNews(source: "a Source", title: "A News Title", body: "A Body News")])
+        sut.viewModel = NewsViewModel(service: service)
         
         sut.loadViewIfNeeded()
         sut.beginAppearanceTransition(true, animated: false)
@@ -72,6 +82,17 @@ class NewsViewControllerTests: XCTestCase {
         
         let initialVC = sb.instantiateViewController(withIdentifier: "newsVC")
         let sut = try XCTUnwrap(initialVC as? NewsViewController)
+        return sut
+    }
+    
+    func makeTestableSUT() throws -> TestableNewsViewController {
+        let bundle = Bundle(for: NewsViewController.self)
+        let sb = UIStoryboard(name: "Main", bundle: bundle)
+        
+        let initialVC = sb.instantiateViewController(identifier: "newsVC") { coder in
+            return TestableNewsViewController(coder: coder)
+        }
+        let sut = try XCTUnwrap(initialVC)
         return sut
     }
 }
@@ -105,4 +126,17 @@ extension NewsViewController {
     
     private var newsSection: Int { 0 }
     
+}
+
+class TestableNewsViewController: NewsViewController {
+    var presentedVC: UIViewController?
+    
+    override func present(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil) {
+        presentedVC = viewControllerToPresent
+    }
+    
+    func errorMessage() -> String? {
+        let alert = presentedVC as? UIAlertController
+        return alert?.message
+    }
 }

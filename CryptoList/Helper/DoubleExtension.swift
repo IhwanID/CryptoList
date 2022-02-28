@@ -13,6 +13,7 @@ extension Formatter {
         formatter.maximumFractionDigits = 4
         formatter.numberStyle = .currency
         formatter.groupingSeparator = "."
+        formatter.locale = Locale.init(identifier: "en_US")
         return formatter
     }()
     

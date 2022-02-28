@@ -8,12 +8,11 @@
 import UIKit
 
 class NewsViewController: UITableViewController {
-    
-    var service: NewsService?
+    var viewModel: NewsViewModel?
     
     var news: [News] = [] {
         didSet{
-            DispatchQueue.main.async {
+            guaranteeMainThread {
                 self.tableView.reloadData()
             }
         }
@@ -22,23 +21,22 @@ class NewsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "News"
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        fetchNews()
-    }
-    
-    func fetchNews(){
-        service?.load { [weak self] result in
-            switch result {
-            case let .success(news):
-                self?.news = news
-            case let .failure(error):
+        
+        viewModel?.onNewsLoad = { [weak self] news in
+            self?.news = news
+        }
+        
+        viewModel?.onNewsError = { [weak self] error in
+            guaranteeMainThread {
                 self?.handle(error) {
-                    self?.fetchNews()
+                    self?.viewModel?.fetchNews()
                 }
             }
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        viewModel?.fetchNews()
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

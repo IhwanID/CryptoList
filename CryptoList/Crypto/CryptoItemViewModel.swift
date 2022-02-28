@@ -20,7 +20,7 @@ extension CryptoItemViewModel {
     init(coin: Coin, livePrice: Double){
         
         let currentPrice = coin.open24Hour
-       
+        
         let diffPrice: Double = livePrice - currentPrice
         let percentage = (diffPrice/livePrice)
         name = coin.name
