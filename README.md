@@ -6,6 +6,10 @@
 
 iOS App that show live update cryptocurrency price with current news.
 
+## Screenshot
+![home](screenshot/home.png "Home Screen")
+![news](screenshot/news.png "News Feature")
+
 ## Requirement:
 - [x] Display a list of at least 50 tickers
 - [x] Display news related to the currency selected upon tapping a cell
