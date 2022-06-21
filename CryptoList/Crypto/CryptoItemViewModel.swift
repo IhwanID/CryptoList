@@ -27,6 +27,6 @@ extension CryptoItemViewModel {
         symbol = coin.symbol
         price = "\(livePrice.currencyFormat)"
         ticker = "\(diffPrice.diffFomat)(\(percentage.percentageFormat))"
-        bgColor = diffPrice.sign == .minus ? .init(red: 255.0/255.0, green: 52.0/255.0, blue: 42.0/255.0, alpha: 1) : .init(red: 46.0/255.0, green: 192.0/255.0, blue: 79.0/255.0, alpha: 1)
+        bgColor = diffPrice.sign == .minus ? .systemRed : .systemGreen
     }
 }
