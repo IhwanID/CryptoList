@@ -14,9 +14,7 @@ class CryptoListViewController: UITableViewController {
     
     private var coins: [Coin] = [] {
         didSet{
-            guaranteeMainThread {
-                self.tableView.reloadData()
-            }
+            self.tableView.reloadData()
         }
     }
     
@@ -40,18 +38,18 @@ class CryptoListViewController: UITableViewController {
                 self?.send(text: requestString)
             }
             
-            guaranteeMainThread {
-                self?.refreshControl?.endRefreshing()
-            }
+            
+            self?.refreshControl?.endRefreshing()
+            
         }
         
         viewModel?.onCoinsError = { [weak self] error in
-            guaranteeMainThread {
-                self?.refreshControl?.endRefreshing()
-                self?.handle(error) {
-                    self?.viewModel?.fetchCoins()
-                }
+            
+            self?.refreshControl?.endRefreshing()
+            self?.handle(error) {
+                self?.viewModel?.fetchCoins()
             }
+            
         }
         
     }

@@ -12,9 +12,7 @@ class NewsViewController: UITableViewController {
     
     var news: [News] = [] {
         didSet{
-            guaranteeMainThread {
-                self.tableView.reloadData()
-            }
+            self.tableView.reloadData()
         }
     }
     
@@ -27,10 +25,9 @@ class NewsViewController: UITableViewController {
         }
         
         viewModel?.onNewsError = { [weak self] error in
-            guaranteeMainThread {
-                self?.handle(error) {
-                    self?.viewModel?.fetchNews()
-                }
+            
+            self?.handle(error) {
+                self?.viewModel?.fetchNews()
             }
         }
     }

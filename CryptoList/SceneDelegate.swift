@@ -35,7 +35,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let bundle = Bundle(for: CryptoListViewController.self)
         let storyboard = UIStoryboard(name: "Main", bundle: bundle)
         let vc = storyboard.instantiateInitialViewController() as! CryptoListViewController
-        vc.viewModel = CryptoListViewModel(service: CryptoServiceAPI(url: CryptoEndpoint.get(limit: 50).url(baseURL: baseURL), client: httpClient))
+        vc.viewModel = CryptoListViewModel(service: MainQueueDispatchDecorator(decoratee: CryptoServiceAPI(url: CryptoEndpoint.get(limit: 50).url(baseURL: baseURL), client: httpClient)))
         vc.select = { [self] symbol in
             let controller = self.makeNewsViewController(category: symbol)
             let nav = UINavigationController(rootViewController: controller)
@@ -54,16 +54,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let bundle = Bundle(for: NewsViewController.self)
         let storyboard = UIStoryboard(name: "Main", bundle: bundle)
         let vc = storyboard.instantiateViewController(withIdentifier: "newsVC") as! NewsViewController
-        vc.viewModel = NewsViewModel(service: NewsServiceAPI(url: NewsEndpoint.get(category: category).url(baseURL: baseURL), client: httpClient))
+        vc.viewModel = NewsViewModel(service: MainQueueDispatchDecorator(decoratee: NewsServiceAPI(url: NewsEndpoint.get(category: category).url(baseURL: baseURL), client: httpClient)))
         return vc
     }
     
 }
 
-func guaranteeMainThread(_ work: @escaping () -> Void) {
-    if Thread.isMainThread {
-        work()
-    } else {
-        DispatchQueue.main.async(execute: work)
-    }
-}

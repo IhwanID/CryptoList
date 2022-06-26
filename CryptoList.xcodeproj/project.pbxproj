@@ -44,6 +44,7 @@
 		60D9A0A927B8EC5A00C8B614 /* LoadNewsFromRemoteUseCaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D9A0A827B8EC5A00C8B614 /* LoadNewsFromRemoteUseCaseTest.swift */; };
 		60D9A0AD27B8FEFF00C8B614 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60D9A0AC27B8FEFF00C8B614 /* UIViewControllerExtension.swift */; };
 		60FD88CD286807E5008FC91D /* DummyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60FD88CC286807E5008FC91D /* DummyViewController.swift */; };
+		60FD88CF28680A6B008FC91D /* MainQueueDispatchDecorator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60FD88CE28680A6B008FC91D /* MainQueueDispatchDecorator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +98,7 @@
 		60D9A0A827B8EC5A00C8B614 /* LoadNewsFromRemoteUseCaseTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadNewsFromRemoteUseCaseTest.swift; sourceTree = "<group>"; };
 		60D9A0AC27B8FEFF00C8B614 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
 		60FD88CC286807E5008FC91D /* DummyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyViewController.swift; sourceTree = "<group>"; };
+		60FD88CE28680A6B008FC91D /* MainQueueDispatchDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainQueueDispatchDecorator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +127,7 @@
 				60D9A0AC27B8FEFF00C8B614 /* UIViewControllerExtension.swift */,
 				60A787CF27B94BE1007F8C33 /* StringExtension.swift */,
 				60FD88CC286807E5008FC91D /* DummyViewController.swift */,
+				60FD88CE28680A6B008FC91D /* MainQueueDispatchDecorator.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -358,6 +361,7 @@
 				6046E1C627B6AABA001D3F0F /* CryptoListViewController.swift in Sources */,
 				6046E1CF27B6C7B1001D3F0F /* CryptoCell.swift in Sources */,
 				609BBE3A27B742AD0085290B /* News.swift in Sources */,
+				60FD88CF28680A6B008FC91D /* MainQueueDispatchDecorator.swift in Sources */,
 				602DECFE27B7B71700AA0775 /* DictionaryExtension.swift in Sources */,
 				60FD88CD286807E5008FC91D /* DummyViewController.swift in Sources */,
 				609BBE3C27B742EE0085290B /* NewsService.swift in Sources */,
