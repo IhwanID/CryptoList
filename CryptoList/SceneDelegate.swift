@@ -32,12 +32,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func makeCryptoListViewController(title: String) -> CryptoListViewController {
-        let socketURL = URL(string: "wss://streamer.cryptocompare.com/v2?api_key=7b9eee5bd406bb262532c51c3665375786b10d5b45c17bf0772d687b15842111")!
         let bundle = Bundle(for: CryptoListViewController.self)
         let storyboard = UIStoryboard(name: "Main", bundle: bundle)
         let vc = storyboard.instantiateInitialViewController() as! CryptoListViewController
         vc.viewModel = CryptoListViewModel(service: CryptoServiceAPI(url: CryptoEndpoint.get(limit: 50).url(baseURL: baseURL), client: httpClient))
-        vc.webSocketConnection = WebSocketTaskConnection(url: socketURL)
         vc.select = { [self] symbol in
             let controller = self.makeNewsViewController(category: symbol)
             let nav = UINavigationController(rootViewController: controller)

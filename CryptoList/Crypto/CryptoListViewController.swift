@@ -9,8 +9,8 @@ import UIKit
 
 class CryptoListViewController: UITableViewController {
     var viewModel: CryptoListViewModel?
-    var webSocketConnection: WebSocketConnection?
     var select: (String) -> Void = { _ in }
+    var webSocket: URLSessionWebSocketTask?
     
     private var coins: [Coin] = [] {
         didSet{
@@ -26,8 +26,8 @@ class CryptoListViewController: UITableViewController {
         
         refreshControl = UIRefreshControl()
         refreshControl?.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
-        webSocketConnection?.delegate = self
-        webSocketConnection?.connect()
+        initWebSocket()
+        connect()
         
         viewModel?.onCoinsLoad = { [weak self] coins in
             self?.coins = coins
@@ -37,8 +37,9 @@ class CryptoListViewController: UITableViewController {
             ] as [String : Any]
             
             if let requestString = subRequest.toJSONString() {
-                self?.webSocketConnection?.send(text: requestString)
+                self?.send(text: requestString)
             }
+            
             guaranteeMainThread {
                 self?.refreshControl?.endRefreshing()
             }
@@ -92,40 +93,83 @@ class CryptoListViewController: UITableViewController {
     
 }
 
-extension CryptoListViewController : WebSocketConnectionDelegate {
+extension CryptoListViewController: URLSessionWebSocketDelegate {
+    func initWebSocket() {
+        let webSocketURL = URL(string: "wss://streamer.cryptocompare.com/v2?api_key=7b9eee5bd406bb262532c51c3665375786b10d5b45c17bf0772d687b15842111")!
+        webSocket = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue()).webSocketTask(with: webSocketURL)
+    }
     
-    func onDisconnected(connection: WebSocketConnection, error: Error?) {
+    func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didOpenWithProtocol protocol: String?) {
+        print("==> onConnected")
+    }
+    
+    func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didCloseWith closeCode: URLSessionWebSocketTask.CloseCode, reason: Data?) {
         print("==> onDisconnected")
     }
     
-    func onError(connection: WebSocketConnection, error: Error) {
-        print("==> onError")
+    func connect() {
+        webSocket?.resume()
+        
+        listen()
     }
     
-    func onMessage(connection: WebSocketConnection, text: String) {
-        
-        let data = Data(text.utf8)
-        let json = try! JSONSerialization.jsonObject(with: data, options: []) as? [String : Any]
-        
-        if let type = (json?["TYPE"] as? NSString)?.intValue {
-            if type == 2 {
-                let price: Double = json?["PRICE"] as? Double ?? 0
-                let symbol: String = json?["FROMSYMBOL"] as! String
-                
-                if price > 0 {
-                    if let row: Int = self.coins.firstIndex(where: {$0.symbol == symbol}) {
-                        DispatchQueue.main.async {
-                            let indexPath: IndexPath = NSIndexPath(row: row, section: 0) as IndexPath
-                            let cell = self.tableView.cellForRow(at: indexPath) as! CryptoCell?
-                            let vm = CryptoItemViewModel(coin: self.coins[row], livePrice: price)
-                            cell?.configure(vm)
+    func disconnect() {
+        webSocket?.cancel(with: .goingAway, reason: nil)
+    }
+    
+    func listen()  {
+        webSocket?.receive { result in
+            switch result {
+            case .failure(let error):
+                print("==> onFailure \(error.localizedDescription)")
+            case .success(let message):
+                switch message {
+                case .string(let text):
+                    let data = Data(text.utf8)
+                    let json = try! JSONSerialization.jsonObject(with: data, options: []) as? [String : Any]
+                    
+                    if let type = (json?["TYPE"] as? NSString)?.intValue {
+                        if type == 2 {
+                            let price: Double = json?["PRICE"] as? Double ?? 0
+                            let symbol: String = json?["FROMSYMBOL"] as! String
+                            print("===> onMessage \(symbol) : \(price)")
+                            if price > 0 {
+                                if let row: Int = self.coins.firstIndex(where: {$0.symbol == symbol}) {
+                                    DispatchQueue.main.async {
+                                        let indexPath: IndexPath = NSIndexPath(row: row, section: 0) as IndexPath
+                                        let cell = self.tableView.cellForRow(at: indexPath) as! CryptoCell?
+                                        let vm = CryptoItemViewModel(coin: self.coins[row], livePrice: price)
+                                        cell?.configure(vm)
+                                    }
+                                }
+                            }
                         }
-                        
                     }
+                    
+                case .data(let data):
+                    print("Data message: \(data)")
+                @unknown default:
+                    fatalError()
                 }
                 
+                self.listen()
             }
         }
     }
     
+    func send(text: String) {
+        webSocket?.send(URLSessionWebSocketTask.Message.string(text)) { error in
+            if let error = error {
+                print("==> onError \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    func send(data: Data) {
+        webSocket?.send(URLSessionWebSocketTask.Message.data(data)) { error in
+            if let error = error {
+                print("==> onError \(error.localizedDescription)")
+            }
+        }
+    }
 }
