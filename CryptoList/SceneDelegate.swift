@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private lazy var baseURL = URL(string: "https://min-api.cryptocompare.com")!
     
     private lazy var navigationController = UINavigationController(
-        rootViewController: makeCryptoListViewController(title: "Toplists"))
+        rootViewController: makeCryptoListViewController())
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
@@ -31,7 +31,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.makeKeyAndVisible()
     }
     
-    func makeCryptoListViewController(title: String) -> CryptoListViewController {
+    func makeCryptoListViewController() -> CryptoListViewController {
         let bundle = Bundle(for: CryptoListViewController.self)
         let storyboard = UIStoryboard(name: "Main", bundle: bundle)
         let vc = storyboard.instantiateInitialViewController() as! CryptoListViewController
@@ -41,6 +41,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let nav = UINavigationController(rootViewController: controller)
             navigationController.showDetailViewController(nav, sender: nil)
         }
+        return vc
+    }
+    
+    func makeDummyViewController(title: String) -> DummyViewController {
+        let vc = DummyViewController()
+        vc.title = title
         return vc
     }
     
