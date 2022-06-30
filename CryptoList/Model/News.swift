@@ -11,6 +11,7 @@ struct News {
     let source: String
     let title: String
     let body: String
+    let url: URL
 }
 
 extension News: Equatable {}

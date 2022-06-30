@@ -37,16 +37,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let vc = storyboard.instantiateInitialViewController() as! CryptoListViewController
         vc.viewModel = CryptoListViewModel(service: MainQueueDispatchDecorator(decoratee: CryptoServiceAPI(url: CryptoEndpoint.get(limit: 50).url(baseURL: baseURL), client: httpClient)))
         vc.select = { [self] symbol in
-            let controller = self.makeNewsViewController(category: symbol)
-            let nav = UINavigationController(rootViewController: controller)
-            navigationController.showDetailViewController(nav, sender: nil)
+            let vc = self.makeNewsViewController(category: symbol)
+            navigationController.show(vc, sender: nil)
         }
-        return vc
-    }
-    
-    func makeDummyViewController(title: String) -> DummyViewController {
-        let vc = DummyViewController()
-        vc.title = title
         return vc
     }
     
@@ -59,4 +52,3 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
 }
-

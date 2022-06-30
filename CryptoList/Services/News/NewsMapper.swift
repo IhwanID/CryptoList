@@ -16,7 +16,7 @@ enum NewsMapper {
         }
         
         var news : [News] {
-            data.map{ News(source: $0.source, title: $0.title, body: $0.body)}
+            data.map{ News(source: $0.source, title: $0.title, body: $0.body, url: $0.url)}
         }
     }
     
@@ -24,6 +24,7 @@ enum NewsMapper {
         let title: String
         let source: String
         let body: String
+        let url: URL
     }
     
     private static var statusCode200: Int { return 200 }

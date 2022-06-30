@@ -4,13 +4,28 @@
 
 # CryptoList
 
-iOS App that displays live price updates list of most active cryptocurrencies with current news.
+## iOS App that displays live price updates list of most active cryptocurrencies with current news.
 
-## Screenshot
-![home](screenshot/home.png "Home Screen")
-![news](screenshot/news.png "News Feature")
+### Story: User requests to see list of most active cryptocurrencies with live price updates
 
-## Requirement:
+### Narrative #1
+
+```
+As an online user
+I want the app to automatically load list of most active cryptocurrencies with live price updates
+So I can always enjoy the newest price of list cryptocurrencies
+```
+
+#### Scenarios (Acceptance criteria)
+
+```
+Given the user has connectivity
+When the user requests to see list of most active cryptocurrencies
+Then the app should display list of most active cryptocurrencies with live price updates from remote
+```
+
+#### Requirement:
+
 - [x] Display a list of at least 50 tickers
 - [x] Display news related to the currency selected upon tapping a cell
 - [x] Show live price updates using Web Socket
@@ -18,13 +33,14 @@ iOS App that displays live price updates list of most active cryptocurrencies wi
 - [x] Show the correct ticker color (green when the price increases and red for the opposite)
 - [x] Handle network errors
 
-## Solution:
+#### Solution:
+
 - Using URLSession for load data coin and news
 - Using URLSessionWebSocketTask for load live price updates from Websocket
 
 ## TODO:
-- Unit Testing for WebSocket layer (in research)
-- Generic in Unit Testing (Reusable Testing)
+- Decouple WebSocket
+- Unit Testing for WebSocket layer
 
 ## How to install :
 - Make sure you have Xcode 13.2.1 or above

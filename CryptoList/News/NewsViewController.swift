@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SafariServices
 
 class NewsViewController: UITableViewController {
     var viewModel: NewsViewModel?
@@ -38,6 +39,7 @@ class NewsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        present(SFSafariViewController(url: news[indexPath.row].url), animated: true)
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {

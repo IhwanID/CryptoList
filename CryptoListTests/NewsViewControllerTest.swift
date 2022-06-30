@@ -63,7 +63,7 @@ class NewsViewControllerTests: XCTestCase {
     
     func test_viewDidLoad_rendersNews() throws {
         let sut = try makeSUT()
-        let service =  NewsServiceSpy(result: [makeNews(source: "a Source", title: "A News Title", body: "A Body News")])
+        let service =  NewsServiceSpy(result: [makeNews(source: "a Source", title: "A News Title", body: "A Body News", url: URL(string: "https://any.com")!)])
         sut.viewModel = NewsViewModel(service: service)
         
         sut.loadViewIfNeeded()
@@ -97,8 +97,8 @@ class NewsViewControllerTests: XCTestCase {
     }
 }
 
-private func makeNews(source: String, title: String, body: String) -> News {
-    News(source: source, title: title, body: body)
+private func makeNews(source: String, title: String, body: String, url: URL) -> News {
+    News(source: source, title: title, body: body, url: url)
 }
 
 extension NewsViewController {

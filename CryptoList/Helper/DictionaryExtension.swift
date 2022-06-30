@@ -14,8 +14,7 @@ extension Dictionary {
     
     func toJSONString() -> String? {
         if let jsonData = jsonData {
-            let jsonString = String(data: jsonData, encoding: .utf8)
-            return jsonString
+            return String(data: jsonData, encoding: .utf8)
         }
         
         return nil
