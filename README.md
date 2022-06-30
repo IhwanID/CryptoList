@@ -29,7 +29,7 @@ Then the app should display list of most active cryptocurrencies with live price
 - [x] Display a list of at least 50 tickers
 - [x] Display news related to the currency selected upon tapping a cell
 - [x] Show live price updates using Web Socket
-- [x] Pull to refresh from the Toplist
+- [x] Pull to refresh from the CryptoList
 - [x] Show the correct ticker color (green when the price increases and red for the opposite)
 - [x] Handle network errors
 

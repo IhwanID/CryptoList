@@ -18,7 +18,7 @@ class CryptoListViewControllerTests: XCTestCase {
         
         sut.loadViewIfNeeded()
         
-        XCTAssertEqual(sut.title, "Toplists")
+        XCTAssertEqual(sut.title, "CryptoList")
     }
     
     
