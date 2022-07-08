@@ -93,7 +93,7 @@ class CryptoListViewController: UITableViewController {
 
 extension CryptoListViewController: URLSessionWebSocketDelegate {
     func initWebSocket() {
-        let webSocketURL = URL(string: "wss://streamer.cryptocompare.com/v2?api_key=7b9eee5bd406bb262532c51c3665375786b10d5b45c17bf0772d687b15842111")!
+        let webSocketURL = URL(string: "wss://streamer.cryptocompare.com/v2?api_key=4c6ec4fa84b66963743a2a2ea291ec5e6216fe1c5453046f3b16c186878743b5")!
         webSocket = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue()).webSocketTask(with: webSocketURL)
     }
     
