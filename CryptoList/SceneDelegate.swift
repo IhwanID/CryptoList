@@ -17,8 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     private lazy var baseURL = URL(string: "https://min-api.cryptocompare.com")!
     
-    private lazy var navigationController = UINavigationController(
-        rootViewController: makeCryptoListViewController())
+    private lazy var navigationController = UINavigationController()
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
@@ -28,6 +27,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     func configureWindow() {
         window?.rootViewController = navigationController
+        navigationController.viewControllers = [makeCryptoListViewController()]
         window?.makeKeyAndVisible()
     }
     
@@ -35,11 +35,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let bundle = Bundle(for: CryptoListViewController.self)
         let storyboard = UIStoryboard(name: "Main", bundle: bundle)
         let vc = storyboard.instantiateInitialViewController() as! CryptoListViewController
-        vc.viewModel = CryptoListViewModel(service: MainQueueDispatchDecorator(decoratee: CryptoServiceAPI(url: CryptoEndpoint.get(limit: 50).url(baseURL: baseURL), client: httpClient)))
-        vc.select = { [self] symbol in
-            let vc = self.makeNewsViewController(category: symbol)
-            navigationController.show(vc, sender: nil)
+        let vm = CryptoListViewModel(service: MainQueueDispatchDecorator(decoratee: CryptoServiceAPI(url: CryptoEndpoint.get(limit: 50).url(baseURL: baseURL), client: httpClient)))
+        vc.viewModel = vm
+        
+        let url = URL(string: "wss://streamer.cryptocompare.com/v2?api_key=4c6ec4fa84b66963743a2a2ea291ec5e6216fe1c5453046f3b16c186878743b5")!
+        let tracker = CoinWebSocketTracker(url: url, queue: .main)
+        vc.viewIsReady = tracker.connect
+        vm.add(coinsObserver: tracker.track)
+        tracker.didReceiveNewCoinPrice = { [weak vc] newPrice in
+                vc?.didReceive(newCoinPrice: newPrice)
         }
+        
+        let flow = NewsSelectionFlow(navigationController: navigationController, makeNewsViewController: makeNewsViewController(category:))
+        vc.select = flow.showNews(forSymbol:)
         return vc
     }
     
@@ -51,4 +59,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return vc
     }
     
+}
+
+class NewsSelectionFlow {
+    
+    let navigationController: UINavigationController
+    let makeNewsViewController: (String) -> UIViewController
+    
+    internal init(navigationController: UINavigationController, makeNewsViewController: @escaping (String) -> UIViewController) {
+        self.navigationController = navigationController
+        self.makeNewsViewController = makeNewsViewController
+    }
+    
+    func showNews(forSymbol symbol: String) {
+        let vc = makeNewsViewController(symbol)
+        navigationController.show(vc, sender: nil)
+    }
 }

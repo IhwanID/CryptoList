@@ -24,7 +24,7 @@ enum NewsMapper {
         let title: String
         let source: String
         let body: String
-        let url: URL
+        let url: String
     }
     
     private static var statusCode200: Int { return 200 }
