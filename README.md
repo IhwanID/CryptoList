@@ -38,12 +38,16 @@ Then the app should display list of most active cryptocurrencies with live price
 - Using URLSession for load data coin and news
 - Using URLSessionWebSocketTask for load live price updates from Websocket
 
-#### TODO:
-- Decouple WebSocket
-- Unit Testing for WebSocket layer
-
 #### How to install :
 - Make sure you have Xcode 13.2.1 or above
 - Open CryptoList.xcodeproj
 - Run unit testing using `cmd + U`
 - Run project to simulator or real device using `cmd + R`
+
+
+#### Notes: 
+
+This repo is used for mentoring sessions at Essential Developer. use branch `starter` if you want to learn refactoring by watching the video.
+<a href="http://www.youtube.com/watch?feature=player_embedded&v=7YXYgT2zTAQ" target="_blank">
+<img src="http://img.youtube.com/vi/7YXYgT2zTAQ/0.jpg" alt="IMAGE ALT TEXT HERE" width="240" height="180" border="10" />
+</a>
