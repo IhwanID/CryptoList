@@ -8,7 +8,7 @@
 import Foundation
 
 class NewsViewModel {
-    var service: NewsService?
+    private let service: NewsService
     
     init(service: NewsService){
         self.service = service
@@ -18,15 +18,18 @@ class NewsViewModel {
     
     var onNewsLoad: Observer<[News]>?
     var onNewsError: Observer<Error>?
+    var onNewsLoading: Observer<Bool>?
     
     func fetchNews(){
-        service?.load { [weak self] result in
+        onNewsLoading?(true)
+        service.load { [weak self] result in
             switch result {
             case let .success(news):
                 self?.onNewsLoad?(news)
             case let .failure(error):
                 self?.onNewsError?(error)
             }
+            self?.onNewsLoading?(false)
         }
     }
 }

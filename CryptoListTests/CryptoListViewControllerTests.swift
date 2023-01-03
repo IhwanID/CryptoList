@@ -66,6 +66,23 @@ class CryptoListViewControllerTests: XCTestCase {
         
     }
     
+    func test_coinUpdated_updateCoinCell() throws {
+        let sut = try makeSUT()
+        let service = CryptoServiceSpy(result: [makeCoin(name: "Bitcoin", symbol: "BTC", price: 100)])
+        sut.viewModel = CryptoListViewModel(service: service)
+        
+        sut.loadViewIfNeeded()
+        sut.beginAppearanceTransition(true, animated: false)
+        
+        sut.didReceive(newCoinPrice: NewCoinPrice(price: 110, symbol: "BTC"))
+        
+        XCTAssertEqual(sut.numberOfCoin(), 1)
+        XCTAssertEqual(sut.name(atRow: 0), "Bitcoin")
+        XCTAssertEqual(sut.symbol(atRow: 0), "BTC")
+        XCTAssertEqual(sut.price(atRow: 0), "$110.00")
+        
+    }
+    
     func test_viewWillAppear_failedAPIResponse_showsError() throws {
         let service = CryptoServiceSpy(result: AnyError(errorDescription: "Error: Failed API Response"))
         let sut = try makeTestableSUT()

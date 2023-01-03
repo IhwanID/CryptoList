@@ -10,13 +10,9 @@ import UIKit
 class CryptoListViewController: UITableViewController {
     var viewModel: CryptoListViewModel?
     var select: (String) -> Void = { _ in }
-    var webSocket: URLSessionWebSocketTask?
+    var viewIsReady: () -> Void = {}
     
-    private var coins: [Coin] = [] {
-        didSet{
-            self.tableView.reloadData()
-        }
-    }
+    private var coins: [Coin] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,28 +20,23 @@ class CryptoListViewController: UITableViewController {
         
         refreshControl = UIRefreshControl()
         refreshControl?.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
-        initWebSocket()
-        connect()
+        viewIsReady()
         
-        viewModel?.onCoinsLoad = { [weak self] coins in
-            self?.coins = coins
-            let subRequest = [
-                "action": "SubAdd",
-                "subs": coins.map{$0.subs}
-            ] as [String : Any]
-            
-            if let requestString = subRequest.toJSONString() {
-                self?.send(text: requestString)
+        viewModel?.onCoinsLoading = { [weak self] isLoading in
+            if isLoading {
+                self?.refreshControl?.beginRefreshing()
+            } else {
+                self?.refreshControl?.endRefreshing()
             }
-            
-            
-            self?.refreshControl?.endRefreshing()
-            
         }
         
-        viewModel?.onCoinsError = { [weak self] error in
+        viewModel?.add(coinsObserver: { [weak self] coins in
+            self?.coins = coins
+            self?.tableView.reloadData()
             
-            self?.refreshControl?.endRefreshing()
+        })
+        
+        viewModel?.onCoinsError = { [weak self] error in
             self?.handle(error) {
                 self?.viewModel?.fetchCoins()
             }
@@ -55,13 +46,10 @@ class CryptoListViewController: UITableViewController {
     }
     
     @objc private func refresh(_ sender: Any) {
-        refreshControl?.beginRefreshing()
         viewModel?.fetchCoins()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        refreshControl?.beginRefreshing()
         viewModel?.fetchCoins()
     }
     
@@ -89,85 +77,13 @@ class CryptoListViewController: UITableViewController {
         select(coins[indexPath.row].symbol)
     }
     
-}
-
-extension CryptoListViewController: URLSessionWebSocketDelegate {
-    func initWebSocket() {
-        let webSocketURL = URL(string: "wss://streamer.cryptocompare.com/v2?api_key=4c6ec4fa84b66963743a2a2ea291ec5e6216fe1c5453046f3b16c186878743b5")!
-        webSocket = URLSession(configuration: .default, delegate: self, delegateQueue: OperationQueue()).webSocketTask(with: webSocketURL)
-    }
-    
-    func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didOpenWithProtocol protocol: String?) {
-        print("==> onConnected")
-    }
-    
-    func urlSession(_ session: URLSession, webSocketTask: URLSessionWebSocketTask, didCloseWith closeCode: URLSessionWebSocketTask.CloseCode, reason: Data?) {
-        print("==> onDisconnected")
-    }
-    
-    func connect() {
-        webSocket?.resume()
-        
-        listen()
-    }
-    
-    func disconnect() {
-        webSocket?.cancel(with: .goingAway, reason: nil)
-    }
-    
-    func listen()  {
-        webSocket?.receive { result in
-            switch result {
-            case .failure(let error):
-                print("==> onFailure \(error.localizedDescription)")
-            case .success(let message):
-                switch message {
-                case .string(let text):
-                    let data = Data(text.utf8)
-                    let json = try! JSONSerialization.jsonObject(with: data, options: []) as? [String : Any]
-                    
-                    if let type = (json?["TYPE"] as? NSString)?.intValue {
-                        if type == 2 {
-                            let price: Double = json?["PRICE"] as? Double ?? 0
-                            let symbol: String = json?["FROMSYMBOL"] as! String
-                            print("===> onMessage \(symbol) : \(price)")
-                            if price > 0 {
-                                if let row: Int = self.coins.firstIndex(where: {$0.symbol == symbol}) {
-                                    DispatchQueue.main.async {
-                                        let indexPath: IndexPath = NSIndexPath(row: row, section: 0) as IndexPath
-                                        let cell = self.tableView.cellForRow(at: indexPath) as! CryptoCell?
-                                        let vm = CryptoItemViewModel(coin: self.coins[row], livePrice: price)
-                                        cell?.configure(vm)
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    
-                case .data(let data):
-                    print("Data message: \(data)")
-                @unknown default:
-                    fatalError()
-                }
-                
-                self.listen()
+    func didReceive(newCoinPrice: NewCoinPrice) {
+        if let row: Int = coins.firstIndex(where: {$0.symbol == newCoinPrice.symbol}) {
+                let indexPath = IndexPath(row: row, section: 0)
+                self.coins[row].update(with: newCoinPrice)
+                let cell = self.tableView.cellForRow(at: indexPath) as? CryptoCell
+            let vm = CryptoItemViewModel(coin: coins[row], livePrice: newCoinPrice.price)
+                cell?.configure(vm)
             }
-        }
-    }
-    
-    func send(text: String) {
-        webSocket?.send(URLSessionWebSocketTask.Message.string(text)) { error in
-            if let error = error {
-                print("==> onError \(error.localizedDescription)")
-            }
-        }
-    }
-    
-    func send(data: Data) {
-        webSocket?.send(URLSessionWebSocketTask.Message.data(data)) { error in
-            if let error = error {
-                print("==> onError \(error.localizedDescription)")
-            }
-        }
     }
 }

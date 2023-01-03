@@ -20,6 +20,8 @@ class NewsViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "News"
+        refreshControl = UIRefreshControl()
+        refreshControl?.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
         
         viewModel?.onNewsLoad = { [weak self] news in
             self?.news = news
@@ -31,6 +33,18 @@ class NewsViewController: UITableViewController {
                 self?.viewModel?.fetchNews()
             }
         }
+        
+        viewModel?.onNewsLoading = { [weak self] isLoading in
+            if isLoading {
+                self?.refreshControl?.beginRefreshing()
+            } else {
+                self?.refreshControl?.endRefreshing()
+            }
+        }
+    }
+    
+    @objc private func refresh(_ sender: Any) {
+        viewModel?.fetchNews()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -39,7 +53,7 @@ class NewsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        present(SFSafariViewController(url: news[indexPath.row].url), animated: true)
+        present(SFSafariViewController(url: URL(string: news[indexPath.row].url)!), animated: true)
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {

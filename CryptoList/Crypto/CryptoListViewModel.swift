@@ -10,23 +10,29 @@ import Foundation
 class CryptoListViewModel {
     typealias Observer<T> = (T) -> Void
     
-    var service: CryptoService?
-    var onCoinsLoad: Observer<[Coin]>?
+    private let service: CryptoService
+    private var onCoinsLoadObservers: [Observer<[Coin]>] = []
     var onCoinsError: Observer<Error>?
+    var onCoinsLoading: Observer<Bool>?
     
+    func add(coinsObserver: @escaping Observer<[Coin]>) {
+        onCoinsLoadObservers.append(coinsObserver)
+    }
     
     init(service: CryptoService){
         self.service = service
     }
     
     func fetchCoins(){
-        service?.load { [weak self] result in
+        onCoinsLoading?(true)
+        service.load { [weak self] result in
             switch result {
             case let .success(coins):
-                self?.onCoinsLoad?(coins)
+                self?.onCoinsLoadObservers.forEach { $0(coins) }
             case let .failure(error):
                 self?.onCoinsError?(error)
             }
+            self?.onCoinsLoading?(false)
         }
         
     }
