@@ -47,4 +47,4 @@ Then the app should display list of most active cryptocurrencies with live price
 
 #### Notes: 
 
-This repo is used for mentoring sessions at Essential Developer. use branch `starter` if you want to learn refactoring by [watching the video](https://youtu.be/7YXYgT2zTAQ).
+This repo is used for mentoring sessions at Essential Developer. use branch [`starter`](https://github.com/IhwanID/CryptoList/tree/starter) if you want to learn refactoring by [watching the video](https://youtu.be/7YXYgT2zTAQ).
